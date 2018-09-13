@@ -1,0 +1,37 @@
+
+.field label {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+}
+
+.field input[type=text] {
+    font-size: 1rem;
+
+    border: 0;
+    border-bottom: 1px solid #c65a5b;
+
+    width: 100%;
+
+    box-sizing: border-box;
+}
+
+.field select {
+    font-size: 1rem;
+
+    border: 0;
+    border-bottom: 1px solid #c65a5b;
+
+    width: 100%;
+
+    box-sizing: border-box;
+}
+
+.field {
+    margin: 10px;
+}
+
+.fields-section__name {
+    display: block;
+}
+

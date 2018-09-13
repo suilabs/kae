@@ -1,0 +1,39 @@
+.table {
+    display: table;
+    width: 50%;
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%);
+}
+
+.row {
+    display: flex;
+    border-bottom: 1px solid #c65a5b;
+    width: 100%;
+    margin-bottom: 5px;
+
+    justify-content: space-between;
+    align-content: center;
+}
+
+.cell {
+    float: left;
+
+    display: inline-block;
+    height: 3rem;
+    line-height: 3rem;
+    padding: 5px;
+}
+
+.cell button {
+    position: relative;
+}
+
+.cell input {
+    border: 0;
+
+    height: 3rem;
+    line-height: 3rem;
+    font-size: 1rem;
+}
+

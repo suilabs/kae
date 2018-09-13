@@ -1,0 +1,32 @@
+.projectDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.fields-section {
+    flex-grow: 1;
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5%;
+}
+
+button {
+    padding: 1rem;
+    border: 1px solid #c65a5b;
+    border-radius: 3px;
+
+    transition: background-color 0.3s ease-in-out, color .1s ease-in-out;
+}
+
+button:hover {
+    background-color: #8d4747;
+}
+
+img {
+    width: 90%;
+    margin: 5%;
+}
