@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import Thumbnail from './Thumbnail';
-import {withImages} from "./GraphQL";
+import Thumbnail from '../Thumbnail';
+import {withImages} from "../GraphQL/index";
 
-const ImageListItem = ({image: {id, name, url}}) => (
+const ImageListItem = ({image: {id, name, url, destUrl}}) => (
   <Link
-    to={`/images/${id}`}
+    to={destUrl || `/image/id/${id}`}
     className="card-link"
   >
     <Thumbnail
@@ -17,12 +17,19 @@ const ImageListItem = ({image: {id, name, url}}) => (
   </Link>
 );
 
+const newImage = {
+  id: 'new',
+  destUrl: '/image/new',
+  name: 'Create New Image',
+  url: '/favicon.ico',
+};
+
 const ImageList = ({data: {images}}) => {
   return (
     <div>
       <h1>Image list</h1>
       <div className={'.list'}>
-        {images.map(image =>
+        {[...images, newImage].map(image =>
           <ImageListItem key={image.id} image={image} />
         )}
       </div>

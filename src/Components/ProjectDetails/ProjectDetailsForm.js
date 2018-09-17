@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {withProjectTypes, withSections} from '../GraphQL';
-import { FieldsSection, SelectInput, InputField } from '../Form/index';
+import {FieldsSection, SelectInput, InputField, ButtonRow} from '../Form/index';
+import ImageSelector from '../Images/ImageSelector';
 
 const ProjectTypesSelector = withProjectTypes(({ data: { projectTypes }, value, onChange }) => (
   <SelectInput options={projectTypes} name="Type" onChange={onChange} value={value} />
@@ -22,7 +23,8 @@ class ProjectDetailsForm extends React.Component {
       description: project.description,
       cover: project.cover,
       type: project.type,
-      section: project.section
+      section: project.section,
+      showOverlay: false,
     }
   }
 
@@ -55,6 +57,27 @@ class ProjectDetailsForm extends React.Component {
     }
   };
 
+  setImage = (image) => {
+    this.onChange({
+      target: {
+        name: 'cover',
+        value: image,
+      }
+    });
+  };
+
+  showOverlay = () => {
+    this.setState({
+      showOverlay: true,
+    });
+  };
+
+  closeOverlay = () => {
+    this.setState({
+      showOverlay: false,
+    });
+  };
+
   onSubmit = (e) => {
     e.preventDefault();
 
@@ -76,10 +99,13 @@ class ProjectDetailsForm extends React.Component {
       cover,
       type,
       section,
+      showOverlay,
     } = this.state;
     let coverUrl, typeId, sectionId;
     if (cover) {
       coverUrl = cover.url;
+    } else {
+      coverUrl = '/favicon.ico';
     }
     if (type) {
       typeId = type.id
@@ -95,17 +121,26 @@ class ProjectDetailsForm extends React.Component {
             <InputField name="Description" value={description} onChange={this.onChange}/>
           </FieldsSection>
           <FieldsSection name="Cover">
-            <img src={coverUrl} className="cover-image"/>
+            <button className="cover-button" onClick={this.showOverlay}>
+              <img src={coverUrl} className="cover-image"/>
+            </button>
           </FieldsSection>
           <FieldsSection name="Classification">
             <ProjectTypesSelector onChange={this.onChange} value={typeId} />
             <SectionsSelector onChange={this.onChange} value={sectionId} />
           </FieldsSection>
         </div>
-        <div className="button-row">
-          {this.props.onDelete && <button onClick={this.onDelete}>Delete</button>}
-          <button onClick={this.onSubmit}>Update</button>
-        </div>
+        <ButtonRow
+          submitText="Update"
+          onSubmit={this.onSubmit}
+          onDelete={this.onDelete}
+          deleteText="Delete"
+        />
+        { showOverlay &&
+          <div className="image-selector-overlay">
+            <ImageSelector onClick={this.setImage} onClose={this.closeOverlay} />
+          </div>
+        }
       </div>
     );
   };
@@ -119,6 +154,6 @@ ProjectDetailsForm.defaultProps = {
   data: {
     project: {}
   }
-}
+};
 
 export default ProjectDetailsForm;

@@ -8,13 +8,7 @@
     flex-grow: 1;
 }
 
-.button-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 5%;
-}
-
-button {
+.update-button, .delete-button {
     padding: 1rem;
     border: 1px solid #c65a5b;
     border-radius: 3px;
@@ -22,11 +16,19 @@ button {
     transition: background-color 0.3s ease-in-out, color .1s ease-in-out;
 }
 
-button:hover {
+.update-button:hover, delete-button:hover {
     background-color: #8d4747;
 }
 
-img {
+.cover-button {
     width: 90%;
-    margin: 5%;
+    max-width: 300px;
+
+    padding: 0;
+
+    background-color: transparent;
+}
+
+.cover-image {
+    width: 100%;
 }

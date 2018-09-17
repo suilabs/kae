@@ -4,7 +4,7 @@ import Blur from './blur';
 
 import './Thumbnail.css';
 
-export default ({name, url, icon: Icon}) => {
+export default ({name, url}) => {
   const backgroundStyle = {
     backgroundImage: `url(${url})`,
   };
@@ -13,13 +13,12 @@ export default ({name, url, icon: Icon}) => {
       className='card'
       style={backgroundStyle}
     >
-      {(url &&
+      {url &&
         [
           <span className="text-background" style={backgroundStyle} />,
           <span className="text">{name}</span>,
           <Blur stdDev={2}/>,
-        ])
-      || <Icon/>
+        ]
       }
     </span>
   );

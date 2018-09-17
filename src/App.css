@@ -52,3 +52,11 @@ nav {
   background-color: #8d4747;
   color: aquamarine;
 }
+
+.active-nav-link {
+  background-color: #c65a5b;
+}
+
+svg {
+  width: 1px;
+}

@@ -1,0 +1,45 @@
+.image-selector__wrapper {
+    position: absolute;
+    padding: 1rem;
+
+    border: 1px solid grey;
+
+    width: 95%;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background-color: rgba(240, 248, 255);
+}
+
+.image-selector__title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.image-selector__title h1 {
+    margin: 0
+}
+
+.image-selector__list {
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+}
+
+button.image-selector__item {
+    margin: .5rem;
+    max-width: 150px;
+    border: 0;
+}
+
+button.image-selector__item img {
+    width: 100%;
+}
+
+button.image-selector__item img:hover {
+    cursor: pointer;
+}

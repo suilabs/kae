@@ -1,24 +1,27 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, withRouter, Link } from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
 import ProjectsList from './Components/ProjectsList';
-import ProjectDetails from './Components/ProjectDetails/ProjectDetails';
 import NewProject from './Components/ProjectDetails/NewProject';
-import ImageList from './Components/ImageList';
+import ImageList from './Components/Images/ImageList';
+import ImageDetails from './Components/Images/ImageDetails';
 import MessageBox from './Components/MessageBox';
 import SectionList from './Components/SectionList';
 import ProjectTypesList from './Components/ProjectTypesList';
+import ProjectById from './Components/ProjectDetails/ProjectById';
+
+import bus from './Core/bus';
 
 import './App.css';
 
 const client = new ApolloClient({
-  uri: '//localhost:4000/graphql',
+  uri: '//192.168.1.147:4000/graphql',
   defaultOptions: {
     watchQuery: {
       fetchPolicy: 'network-only',
-      errorPolicy: 'ignore',
+      errorPolicy: 'all',
     },
     query: {
       fetchPolicy: 'network-only',
@@ -31,12 +34,22 @@ const client = new ApolloClient({
   }
 });
 
+const ClearLink = withRouter((props) => (
+  <a
+    {...props}
+    onClick={() => {
+      props.history.push(props.to);
+      bus.publish('clearMessage');
+    }}
+  />
+));
+
 const menu = () => [
   <nav key="nav">
-    <Link className="nav-link" to="/projects">Projects</Link>
-    <Link className="nav-link" to="/images">Images</Link>
-    <Link className="nav-link" to="/sections">Sections</Link>
-    <Link className="nav-link" to="/types">Types</Link>
+    <ClearLink className="nav-link" to="/projects">Projects</ClearLink>
+    <ClearLink className="nav-link" to="/images">Images</ClearLink>
+    <ClearLink className="nav-link" to="/sections">Sections</ClearLink>
+    <ClearLink className="nav-link" to="/types">Types</ClearLink>
   </nav>,
   <MessageBox key="messageBox" />,
 ];
@@ -50,8 +63,10 @@ class App extends Component {
             <Route path="/" component={menu}/>
             <Route path="/projects" component={ProjectsList} exact/>
             <Route path="/project/new" component={NewProject} exact/>
-            <Route path="/project/id/:id" component={ProjectDetails} exact/>
+            <Route path="/project/id/:id" component={ProjectById} exact/>
             <Route path="/images" component={ImageList} exact />
+            {/*<Route path="/image/new" component={NewImage} exact />*/}
+            <Route path="/image/id/:id" component={ImageDetails} exact />
             <Route path="/sections" component={SectionList} exact />
             <Route path="/types" component={ProjectTypesList} exact />
           </ApolloProvider>

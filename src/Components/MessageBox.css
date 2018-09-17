@@ -1,0 +1,15 @@
+.messageBox-success {
+    border: 1px solid green;
+
+    padding: 1%;
+    margin: 1%;
+    box-sizing: border-box;
+}
+
+.messageBox-error {
+    border: 1px solid red;
+
+    padding: 1%;
+    margin: 1%;
+    box-sizing: border-box;
+}

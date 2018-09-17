@@ -30,7 +30,6 @@ class ProjectDetails extends React.Component {
 
     mutation({
       variables: {
-        id: this.props.data.project.id,
         project: data
       }
     })

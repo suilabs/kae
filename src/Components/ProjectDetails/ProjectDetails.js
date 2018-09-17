@@ -47,7 +47,7 @@ class ProjectDetails extends React.Component {
     })
   };
 
-  deleteProject = (mutation) => (id) => {
+  deleteProject = (mutation, id) => () => {
     mutation({
       variables: {
         ids: [id],
@@ -78,7 +78,7 @@ class ProjectDetails extends React.Component {
                   <ProjectDetailsForm
                     {...this.props}
                     onSubmit={this.onSubmit(updateProject)}
-                    onDelete={() => this.deleteProject(deleteProjects)(this.props.data.project.id)}
+                    onDelete={this.deleteProject(deleteProjects, this.props.data.project.id)}
                   />
                 }
               </Mutation>
@@ -90,4 +90,4 @@ class ProjectDetails extends React.Component {
   }
 }
 
-export default withProject(withRouter(ProjectDetails));
+export default withRouter(withProject(ProjectDetails));

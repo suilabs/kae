@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { withImageMutation, withImage } from './GraphQL';
-import Thumbnail from './Thumbnail';
-import { FieldsSection, SelectInput, InputField } from './Form';
+import Thumbnail from '../Thumbnail';
+import { FieldsSection, InputField } from '../Form/index';
 
 const ImageDetailsForm = ({name, url, onChange}) => {
   <div>

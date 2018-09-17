@@ -41,7 +41,6 @@ export const SelectInput = ({ name, options, value, onChange }) => (
     <select name={name.replace(' ', '_')} onChange={onChange} value={value}>
       <option value="select">Select</option>
       {options.map(({ id, name }) => {
-        console.log(id, name);
         return <option key={id} value={id}>{name}</option>
       })}
     </select>
@@ -63,3 +62,33 @@ SelectInput.defaultProps = {
   options: [],
   onChange: () => {},
 };
+
+export const FileField = ({name, file, onChange}) => (
+  <div className="field">
+    <label htmlFor={name.replace(' ', '_')}>{name}</label>
+    <input type="file" accept="image/*" name={name.replace(' ', '_')} value={file} onChange={onChange}/>
+  </div>
+);
+
+export const ButtonRow = ({deleteText, onDelete, canDelete, submitText, onSubmit}) => (
+  <div className="button-row">
+    {onDelete &&
+    <button className="delete-button" onClick={onDelete} disabled={canDelete}>{deleteText}</button>}
+    <button className="update-button" onClick={onSubmit}>{submitText}</button>
+  </div>
+);
+
+ButtonRow.propTypes = {
+  submitText: PropTypes.string.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  canDelete: PropTypes.bool,
+  deleteText: PropTypes.string,
+  onDelete: PropTypes.func,
+};
+
+ButtonRow.defaultProps = {
+  canDelete: false,
+  deleteText: 'Delete',
+  onDelete: () => {},
+};
+
