@@ -7,6 +7,7 @@ import ProjectsList from './Components/ProjectsList';
 import NewProject from './Components/ProjectDetails/NewProject';
 import ImageList from './Components/Images/ImageList';
 import ImageDetails from './Components/Images/ImageDetails';
+import NewImage from './Components/Images/NewImage';
 import MessageBox from './Components/MessageBox';
 import SectionList from './Components/SectionList';
 import ProjectTypesList from './Components/ProjectTypesList';
@@ -65,7 +66,7 @@ class App extends Component {
             <Route path="/project/new" component={NewProject} exact/>
             <Route path="/project/id/:id" component={ProjectById} exact/>
             <Route path="/images" component={ImageList} exact />
-            {/*<Route path="/image/new" component={NewImage} exact />*/}
+            <Route path="/image/new" component={NewImage} exact />
             <Route path="/image/id/:id" component={ImageDetails} exact />
             <Route path="/sections" component={SectionList} exact />
             <Route path="/types" component={ProjectTypesList} exact />

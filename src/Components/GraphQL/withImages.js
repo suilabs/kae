@@ -17,6 +17,15 @@ export const ImageDeleteQuery = gql`
   }
 `;
 
+export const CreateImageQuery = gql`  
+    mutation CreateImage($name: String!, $url: String!) {
+        insertImage(url: $url, name: $name, ) {
+            id
+            name
+        }
+    }
+`;
+
 const withImageQuery = gql`
     query Image($id: ID!) {
         image(id: $id) {

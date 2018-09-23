@@ -1,12 +1,11 @@
-const baseUrl = 'https://static.suilabs.com/';
 const FileUpload = {
-  url: 'https://static.suilabs.com/images/kae',
+  url: '//localhost:3000/upload/s3',
   upload: async (file) => {
     const headers = new Headers({
       Accept: 'application/json',
     });
     const form = new FormData();
-    form.append('data', file);
+    form.append('file', file);
     const fetchConf = {
       method: 'POST',
       body: form,
@@ -14,7 +13,7 @@ const FileUpload = {
     };
     return fetch(FileUpload.url, fetchConf)
       .then(resp => resp.json())
-      .then(obj => `${baseUrl}${obj.url}`);
+      .then(obj => obj.url);
   }
 };
 

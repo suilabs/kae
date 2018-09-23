@@ -41,6 +41,7 @@ class ImageDetailsForm extends React.Component {
     return FileUpload.upload(target.files[0])
       .then((url) => {
         this.setState({
+
           url,
           uploading: false,
         });
@@ -56,17 +57,17 @@ class ImageDetailsForm extends React.Component {
   };
 
   render() {
-    const { name, url, file, uploading } = this.state;
+    const { name, url, file , uploading } = this.state;
     return (
       <div>
         <FieldsSection name="Image Details">
           <div className="image-form__wrapper">
             <div className="image-form__thumbnail">
-              {name && <Thumbnail name={name} url={url}/>}
+              <Thumbnail name={name} url={url}/>
             </div>
             {
               (uploading && 'Uploading Image') ||
-              <FileField name='File' value={file} onChange={this.handleFileUpload} />
+              <FileField name='File' value={file && file.name} onChange={this.handleFileUpload} />
             }
             <InputField name='Name' value={name} onChange={this.onChange} />
           </div>

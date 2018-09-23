@@ -1,32 +1,37 @@
 import React from 'react';
+import {Mutation} from 'react-apollo';
+import { CreateImageQuery } from '../GraphQL';
+import ImageDetailsForm from './ImageDetailsForm';
 
-import Thumbnail from '../Thumbnail';
-import { FieldsSection, InputField } from '../Form/index';
+import bus from '../../Core/bus';
 
-const ImageDetailsForm = ({name, url, onChange}) => {
-  <div>
-    <FieldsSection name="Image Details">
-      <Thumbnail name={name} url={url}/>
-      <InputField name={name} value={name} onChange={onChange} />
-    </FieldsSection>
-  </div>
-};
+class NewImage extends React.Component {
+  createImage = (mutation) => (image) => mutation({ variables: image });
 
+  onComplete = () => {
+    this.props.history.push('/images');
+    bus.publish('success', 'Image created');
+  };
 
-class ImageDetails extends React.Component {
-  constructor(props) {
-    super(props);
-
-    const { data: { image } } = props;
-
-    this.state = {
-      id: image.id,
-      name: image.name,
-      url: image.url,
-    }
-  }
+  onError = () => {
+    bus.publish('exit', 'Error uploading image');
+  };
 
   render() {
-
+    return (
+      <Mutation
+        mutation={CreateImageQuery}
+        onCompleted={this.onComplete}
+        onError={this.onError}
+      >
+        {(createImage) => <ImageDetailsForm
+            {...this.state}
+            onSubmit={this.createImage(createImage)}
+          />
+        }
+      </Mutation>
+    )
   }
 }
+
+export default NewImage;
