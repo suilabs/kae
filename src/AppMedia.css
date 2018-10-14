@@ -1,0 +1,12 @@
+
+@media (max-width: 32rem) {
+    .kae-container {
+        width: 100%;
+    }
+
+    nav {
+        justify-content: start;
+        width: 100%;
+        overflow-x: scroll;
+    }
+}

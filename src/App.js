@@ -16,11 +16,13 @@ import ProjectDetails from './Components/ProjectDetails/ProjectDetails';
 import ProjectData from './Components/ProjectDetails/ProjectData';
 
 import bus from './Core/bus';
+import config from './Core/config';
 
 import './App.css';
+import './AppMedia.css';
 
 const client = new ApolloClient({
-  uri: process.ENV.GRAPHQL_ENDPOINT,
+  uri: config.GRAPHQL_ENDPOINT,
   defaultOptions: {
     watchQuery: {
       fetchPolicy: 'network-only',
@@ -48,12 +50,14 @@ const ClearLink = withRouter((props) => (
 ));
 
 const menu = () => [
-  <nav key="nav">
-    <ClearLink className="nav-link" to="/projects">Projects</ClearLink>
-    <ClearLink className="nav-link" to="/images">Images</ClearLink>
-    <ClearLink className="nav-link" to="/sections">Sections</ClearLink>
-    <ClearLink className="nav-link" to="/types">Types</ClearLink>
-  </nav>,
+  <div>
+    <nav key="nav">
+      <ClearLink className="nav-link" to="/projects">Projects</ClearLink>
+      <ClearLink className="nav-link" to="/images">Images</ClearLink>
+      <ClearLink className="nav-link" to="/sections">Sections</ClearLink>
+      <ClearLink className="nav-link" to="/types">Types</ClearLink>
+    </nav>
+  </div>,
   <MessageBox key="messageBox" />,
 ];
 

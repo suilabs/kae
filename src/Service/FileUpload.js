@@ -1,6 +1,7 @@
+import config from '../Core/config';
 
 const FileUpload = {
-  url: process.env.STATICS_URL,
+  url: config.STATICS_URL,
   upload: async (file) => {
     const headers = new Headers({
       Accept: 'application/json',
