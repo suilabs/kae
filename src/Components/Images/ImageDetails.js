@@ -26,7 +26,6 @@ class ImageDetails extends React.Component {
   };
 
   onError = (operation) => (error) => {
-    debugger;
     const message = error.networkError.result.errors[0].message;
     bus.publish('error', `Error when trying to ${operation} ${message}`);
   };

@@ -1,10 +1,8 @@
 .image-selector__wrapper {
-    position: absolute;
+    position: fixed;
     padding: 1rem;
 
     border: 1px solid grey;
-
-    width: 95%;
 
     left: 50%;
     top: 50%;

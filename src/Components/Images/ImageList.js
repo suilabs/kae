@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import Thumbnail from '../Thumbnail';
+
 import {withImages} from "../GraphQL/index";
 
 const ImageListItem = ({image: {id, name, url, destUrl}}) => (

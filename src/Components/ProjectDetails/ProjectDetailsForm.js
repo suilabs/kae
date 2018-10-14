@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {withProjectTypes, withSections} from '../GraphQL';
-import {FieldsSection, SelectInput, InputField, ButtonRow} from '../Form/index';
-import ImageSelector from '../Images/ImageSelector';
+import {withProjectTypes, withSections, withTemplates} from '../GraphQL';
+import {FieldsSection, SelectInput, InputField, ButtonRow, ImageSelectorBox} from '../Form/index';
 
 const ProjectTypesSelector = withProjectTypes(({ data: { projectTypes }, value, onChange }) => (
   <SelectInput options={projectTypes} name="Type" onChange={onChange} value={value} />
@@ -11,6 +10,13 @@ const ProjectTypesSelector = withProjectTypes(({ data: { projectTypes }, value, 
 
 const SectionsSelector = withSections(({ data: { sections }, value, onChange }) => (
   <SelectInput options={sections} name="Section" onChange={onChange} value={value} />
+));
+
+const TemplateSelector = withTemplates(({data: { templates }, value, onChange }) => (
+  <SelectInput name="Template" options={templates} onChange={(e) => {
+    const value = templates.find(t => t.id === e.target.value);
+    onChange({target: {value, name: e.target.name}});
+  }} value={value} />
 ));
 
 class ProjectDetailsForm extends React.Component {
@@ -24,7 +30,9 @@ class ProjectDetailsForm extends React.Component {
       cover: project.cover,
       type: project.type,
       section: project.section,
+      template: project.template,
       showOverlay: false,
+      contentHasChanged: false,
     }
   }
 
@@ -33,55 +41,34 @@ class ProjectDetailsForm extends React.Component {
     const targetName = target.name.toLowerCase();
     switch (targetName) {
       case 'section':
-        const { section } = this.state;
-        this.setState({
-          section: {
-            ...section,
-            id: target.value,
-          }
-        });
-        break;
       case 'type':
-        const { type } = this.state;
+      case 'template':
+        const targetObject = this.state[targetName];
+        let newValue = target.value;
+        if (typeof target.value === 'string') {
+          newValue = { id: target.value };
+        }
         this.setState({
-          type: {
-            ...type,
-            id: target.value,
+          [targetName]: {
+            ...targetObject,
+            ...newValue
           },
+          contentHasChanged: true,
         });
         break;
       default:
         this.setState({
-          [target.name.toLowerCase()]: target.value
+          [target.name.toLowerCase()]: target.value,
+          contentHasChanged: true,
         });
     }
   };
 
-  setImage = (image) => {
-    this.onChange({
-      target: {
-        name: 'cover',
-        value: image,
-      }
-    });
-  };
-
-  showOverlay = () => {
-    this.setState({
-      showOverlay: true,
-    });
-  };
-
-  closeOverlay = () => {
-    this.setState({
-      showOverlay: false,
-    });
-  };
-
   onSubmit = (e) => {
     e.preventDefault();
-
-    this.props.onSubmit(this.state);
+    const { contentHasChanged, ...project } = this.state;
+    const changes = contentHasChanged ? project : null;
+    this.props.onSubmit(changes);
   };
 
   onDelete = (e) => {
@@ -99,9 +86,11 @@ class ProjectDetailsForm extends React.Component {
       cover,
       type,
       section,
+      template,
       showOverlay,
+      contentHasChanged,
     } = this.state;
-    let coverUrl, typeId, sectionId;
+    let coverUrl, typeId, sectionId, templateId, templateRows;
     if (cover) {
       coverUrl = cover.url;
     } else {
@@ -113,6 +102,10 @@ class ProjectDetailsForm extends React.Component {
     if (section) {
       sectionId = section.id;
     }
+    if (template) {
+      templateId = template.id;
+    }
+    const submitText = contentHasChanged ? 'Update' : 'Next';
     return (
       <div>
         <div className="projectDetails">
@@ -121,26 +114,20 @@ class ProjectDetailsForm extends React.Component {
             <InputField name="Description" value={description} onChange={this.onChange}/>
           </FieldsSection>
           <FieldsSection name="Cover">
-            <button className="cover-button" onClick={this.showOverlay}>
-              <img src={coverUrl} className="cover-image"/>
-            </button>
+            <ImageSelectorBox src={coverUrl} onChange={this.onChange} />
           </FieldsSection>
           <FieldsSection name="Classification">
             <ProjectTypesSelector onChange={this.onChange} value={typeId} />
             <SectionsSelector onChange={this.onChange} value={sectionId} />
+            <TemplateSelector onChange={this.onChange} value={templateId}/>
           </FieldsSection>
         </div>
         <ButtonRow
-          submitText="Update"
+          submitText={submitText}
           onSubmit={this.onSubmit}
           onDelete={this.onDelete}
           deleteText="Delete"
         />
-        { showOverlay &&
-          <div className="image-selector-overlay">
-            <ImageSelector onClick={this.setImage} onClose={this.closeOverlay} />
-          </div>
-        }
       </div>
     );
   };

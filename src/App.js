@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, withRouter, Link } from 'react-router-dom';
+import { BrowserRouter, Route, withRouter } from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
@@ -12,13 +12,15 @@ import MessageBox from './Components/MessageBox';
 import SectionList from './Components/SectionList';
 import ProjectTypesList from './Components/ProjectTypesList';
 import ProjectById from './Components/ProjectDetails/ProjectById';
+import ProjectDetails from './Components/ProjectDetails/ProjectDetails';
+import ProjectData from './Components/ProjectDetails/ProjectData';
 
 import bus from './Core/bus';
 
 import './App.css';
 
 const client = new ApolloClient({
-  uri: '//192.168.1.147:4000/graphql',
+  uri: process.ENV.GRAPHQL_ENDPOINT,
   defaultOptions: {
     watchQuery: {
       fetchPolicy: 'network-only',
@@ -64,7 +66,8 @@ class App extends Component {
             <Route path="/" component={menu}/>
             <Route path="/projects" component={ProjectsList} exact/>
             <Route path="/project/new" component={NewProject} exact/>
-            <Route path="/project/id/:id" component={ProjectById} exact/>
+            <Route path="/project/id/:id" component={ProjectById(ProjectDetails)} exact/>
+            <Route path="/project/id/:id/template" component={ProjectById(ProjectData)} exact/>
             <Route path="/images" component={ImageList} exact />
             <Route path="/image/new" component={NewImage} exact />
             <Route path="/image/id/:id" component={ImageDetails} exact />

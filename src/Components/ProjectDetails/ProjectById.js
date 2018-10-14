@@ -1,9 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import ProjectDetails from './ProjectDetails';
 
-export default withRouter((props) =>
-  <ProjectDetails
+export default (Component) => withRouter((props) =>
+  <Component
     variables={{
       id: props.match.params.id,
     }}

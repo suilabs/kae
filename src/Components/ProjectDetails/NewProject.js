@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost';
 
+import { flatten, getDefaultValueFromComponentType } from '../../Core/Utils';
+
 import ProjectDetailsForm from './ProjectDetailsForm';
 
 import bus from '../../Core/bus';
@@ -25,7 +27,14 @@ class ProjectDetails extends React.Component {
       description: project.description,
       cover: project.cover.id,
       type: project.type.id,
-      section: project.section.id
+      section: project.section.id,
+      template: project.template.id,
+      configuration: flatten(project.template.rows).map(
+        component => ({
+          component: component.id,
+          value: "",
+        })
+      )
     };
 
     mutation({
@@ -40,7 +49,7 @@ class ProjectDetails extends React.Component {
       <Mutation
         mutation={MUTATION_QUERY}
         onCompleted={({ insertProject }) => {
-          this.props.history.push('/projects');
+          this.props.history.push(`/project/id/${insertProject.id}/template`, insertProject);
           bus.publish('success', `Project ${insertProject.name} created`);
         }}
         onError={(err) => console.log(err)}

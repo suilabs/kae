@@ -22,11 +22,15 @@
 
 .cover-button {
     width: 90%;
-    max-width: 300px;
+    max-width: 200px;
 
     padding: 0;
 
     background-color: transparent;
+}
+
+.cover-button img {
+    width: 100%;
 }
 
 .cover-image {

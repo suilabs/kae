@@ -12,7 +12,6 @@ export const PROJECT_QUERY = gql`
                 url
             }
             description
-            textPool #change to layoutFields
             type {
                 id
                 name
@@ -21,33 +20,24 @@ export const PROJECT_QUERY = gql`
                 id
                 name
             }
+            template {
+                id
+                name
+                rows {
+                  id
+                  name
+                  type
+                }              
+            }
+            configuration {
+              component {
+                id
+              }
+              value
+            }
         }
     }
 `;
-
-
-// const withProject = (Component, refetch) => withRouter((props) => {
-//   return (
-//   <Query
-//     query={PROJECT_QUERY}
-//     fetchPolicy={refetch ? 'cache-and-network': 'cache-first'}
-//     variables={{
-//         id: props.match.params.id
-//     }}
-//   >
-//     {(pp) => {
-//       const { loading, error, data } = pp;
-//       if (loading) return <p className="loading">loading<span>.</span><span>.</span><span>.</span></p>;
-//       if (error) {
-//           console.log(error);
-//           return <p> error </p>;
-//       }
-//       return <Component data={data} {...props} />
-//     }}
-//   </Query>
-// );
-// });
-
 
 const withProject = withQuery(PROJECT_QUERY);
 

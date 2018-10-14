@@ -1,5 +1,6 @@
+
 const FileUpload = {
-  url: '//localhost:3000/upload/s3',
+  url: process.env.STATICS_URL,
   upload: async (file) => {
     const headers = new Headers({
       Accept: 'application/json',

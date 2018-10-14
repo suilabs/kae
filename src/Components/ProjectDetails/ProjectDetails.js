@@ -31,12 +31,16 @@ const DELETE_MUTATION = gql`
 
 class ProjectDetails extends React.Component {
   onSubmit = (mutation) => (project) => {
+    if (!project) {
+      this.redirect(this.props.data.project.id);
+      return;
+    }
     const data = {
       name: project.name,
       description: project.description,
       cover: project.cover.id,
       type: project.type.id,
-      section: project.section.id
+      section: project.section.id,
     };
 
     mutation({
@@ -55,12 +59,16 @@ class ProjectDetails extends React.Component {
     });
   };
 
+  redirect = (id) => {
+    this.props.history.push(`/project/id/${id}/template`);
+  };
+
   render() {
     return (
       <Mutation
         mutation={MUTATION_QUERY}
         onCompleted={({ updateProject }) => {
-          this.props.history.push('/projects');
+          this.redirect(updateProject.id);
           bus.publish('success', `Project ${updateProject.name} updated`);
         }}
         onError={(err) => console.log(err)}
