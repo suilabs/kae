@@ -3,6 +3,7 @@ import { BrowserRouter, Route, withRouter } from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
+import Home from './Home';
 import ProjectsList from './Components/ProjectsList';
 import NewProject from './Components/ProjectDetails/NewProject';
 import ImageList from './Components/Images/ImageList';
@@ -52,6 +53,7 @@ const ClearLink = withRouter((props) => (
 const menu = () => [
   <div>
     <nav key="nav">
+      <ClearLink className="nav-link" to="/">Home</ClearLink>
       <ClearLink className="nav-link" to="/projects">Projects</ClearLink>
       <ClearLink className="nav-link" to="/images">Images</ClearLink>
       <ClearLink className="nav-link" to="/sections">Sections</ClearLink>
@@ -68,6 +70,7 @@ class App extends Component {
         <BrowserRouter>
           <ApolloProvider client={client}>
             <Route path="/" component={menu}/>
+            <Route path="/" component={Home} exact/>
             <Route path="/projects" component={ProjectsList} exact/>
             <Route path="/project/new" component={NewProject} exact/>
             <Route path="/project/id/:id" component={ProjectById(ProjectDetails)} exact/>

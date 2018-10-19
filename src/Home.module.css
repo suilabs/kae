@@ -1,0 +1,15 @@
+.alert-text, .info-text, .success-text {
+    font-weight: bold;
+}
+
+.alert-text {
+    color: darkred;
+}
+
+.info-text {
+    color: darkblue;
+}
+
+.success-text {
+    color: darkgreen;
+}
