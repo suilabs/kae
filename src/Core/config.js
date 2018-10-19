@@ -1,5 +1,5 @@
 export default {
-  HOSTNAME: 'localhost',
+  HOSTNAME: 'v2.hatshin.suilabs.com',
   GRAPHQL: {
     port: 4000,
     service: 'graphql',

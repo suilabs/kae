@@ -36,6 +36,7 @@ class ProjectDetails extends React.Component {
       return;
     }
     const data = {
+      url: project.url,
       name: project.name,
       description: project.description,
       cover: project.cover.id,

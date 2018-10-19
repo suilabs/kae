@@ -25,6 +25,7 @@ class ProjectDetailsForm extends React.Component {
     const { data: { project = {} } = {} } = props;
 
     this.state = {
+      url: project.url,
       name: project.name,
       description: project.description,
       cover: project.cover,
@@ -81,6 +82,7 @@ class ProjectDetailsForm extends React.Component {
 
   render() {
     const {
+      url,
       name,
       description,
       cover,
@@ -112,6 +114,7 @@ class ProjectDetailsForm extends React.Component {
           <FieldsSection name="Basic description">
             <InputField name="Name" value={name} onChange={this.onChange} />
             <InputField name="Description" value={description} onChange={this.onChange}/>
+            <InputField name="Url" value={url} onChange={this.onChange}/>
           </FieldsSection>
           <FieldsSection name="Cover">
             <ImageSelectorBox id="cover" src={coverUrl} onChange={this.onChange} />

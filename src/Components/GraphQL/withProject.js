@@ -6,6 +6,7 @@ export const PROJECT_QUERY = gql`
     query Project($id: ID!){
         project(id: $id) {
             id
+            url
             name
             cover {
                 name
