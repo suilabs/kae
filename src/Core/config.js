@@ -1,4 +1,13 @@
 export default {
-  GRAPHQL_ENDPOINT: process ? process.env.REACT_APP_GRAPHQL_ENDPOINT : '//graphql.suilabs.com/graphql',
-  STATICS_URL: process ? process.env.REACT_APP_STATICS_URL : '//static.suilabs.com/upload/s3',
+  HOSTNAME: 'localhost',
+  GRAPHQL: {
+    port: 4000,
+    service: 'graphql',
+    path: 'graphql',
+  },
+  STATICS: {
+    port: 3000,
+    service: 'static',
+    path: 'upload/s3',
+  },
 }

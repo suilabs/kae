@@ -114,7 +114,7 @@ class ProjectDetailsForm extends React.Component {
             <InputField name="Description" value={description} onChange={this.onChange}/>
           </FieldsSection>
           <FieldsSection name="Cover">
-            <ImageSelectorBox src={coverUrl} onChange={this.onChange} />
+            <ImageSelectorBox id="cover" src={coverUrl} onChange={this.onChange} />
           </FieldsSection>
           <FieldsSection name="Classification">
             <ProjectTypesSelector onChange={this.onChange} value={typeId} />

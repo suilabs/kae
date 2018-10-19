@@ -76,7 +76,6 @@ class ProjectData extends React.Component {
     const { configuration, contentHasChanged } = this.state;
     const submitText = contentHasChanged ? 'Update' : 'Finish';
     const template = flatten(project.template.rows);
-    debugger;
     return [configuration.map(conf => {
       return FieldFactory.renderField(
         template.find(c => c.id === conf.component.id),

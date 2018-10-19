@@ -16,13 +16,13 @@ import ProjectDetails from './Components/ProjectDetails/ProjectDetails';
 import ProjectData from './Components/ProjectDetails/ProjectData';
 
 import bus from './Core/bus';
-import config from './Core/config';
+import { getServiceUrl } from './Core/Utils';
 
 import './App.css';
 import './AppMedia.css';
 
 const client = new ApolloClient({
-  uri: config.GRAPHQL_ENDPOINT,
+  uri: getServiceUrl('graphql'),
   defaultOptions: {
     watchQuery: {
       fetchPolicy: 'network-only',

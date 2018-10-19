@@ -1,7 +1,7 @@
-import config from '../Core/config';
+import { getServiceUrl } from '../Core/Utils';
 
 const FileUpload = {
-  url: config.STATICS_URL,
+  url: getServiceUrl('statics'),
   upload: async (file) => {
     const headers = new Headers({
       Accept: 'application/json',

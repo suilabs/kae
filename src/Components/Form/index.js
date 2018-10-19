@@ -136,4 +136,5 @@ export class ImageSelectorBox extends React.Component {
 ImageSelectorBox.propType = {
   src: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
 };
