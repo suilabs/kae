@@ -1,13 +1,13 @@
 export default {
-  HOSTNAME: 'v2.hatshin.suilabs.com',
+  HOSTNAME: 'suilabs.com',
   GRAPHQL: {
     port: 4000,
-    service: 'graphql',
+    service: 'v2.hathsin',
     path: 'graphql',
   },
   STATICS: {
     port: 3000,
-    service: 'static',
+    service: 'tarbean',
     path: 'upload/s3',
   },
 }

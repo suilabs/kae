@@ -37,20 +37,24 @@ class ImageStrip extends React.Component {
     };
 
     this.onChange = this.onChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
 
   onClick = (url) => () => {
     if (url !== '/favicon.ico') {
       const newSrcSet = this.state.srcset.filter(src => src !== url);
-      this.props.onChange(simulateEvent('imageStrip', newSrcSet));
+      this.props.onChange(simulateEvent(this.props.id, newSrcSet.join(';')));
+      this.setState({
+          srcset: newSrcSet
+      })
     }
   };
 
   onChange = ({target: { value }}) => {
     const { srcset } = this.state;
     srcset.push(value.url);
-    this.props.onChange(simulateEvent(this.props.id, srcset.join(',')));
+    this.props.onChange(simulateEvent(this.props.id, srcset.join(';')));
   };
 
   render() {

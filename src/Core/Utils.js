@@ -13,7 +13,7 @@ export const getServiceUrl = (serviceName) => {
  if (hostname === 'localhost') {
    serviceEndpoint = `//${hostname}:${serviceConfig.port}`;
  } else {
-   serviceEndpoint = `//${serviceConfig.service}.${hostname}`;
+   serviceEndpoint = `https://${serviceConfig.service}.${hostname}`;
  }
  return `${serviceEndpoint}/${serviceConfig.path}`;
 };

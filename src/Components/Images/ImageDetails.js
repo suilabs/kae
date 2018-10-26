@@ -17,7 +17,10 @@ class ImageDetails extends React.Component {
       id: image.id,
       name: image.name,
       url: image.url,
-    }
+    };
+
+    this.onDelete = this.onDelete.bind(this);
+    this.onUpdate = this.onUpdate.bind(this);
   }
 
   onCompleted = (operation) => (object) => {
@@ -43,7 +46,7 @@ class ImageDetails extends React.Component {
   onDelete = (mutation) => () => {
     mutation({
       variables: {
-        id: [this.props.data.image.id],
+        ids: [this.props.data.image.id],
       }
     });
   };
