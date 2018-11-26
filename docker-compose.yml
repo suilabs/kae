@@ -1,0 +1,10 @@
+version: '3'
+services:
+  hathsin:
+    build: .
+    container_name: kae
+
+networks:
+  default:
+    external:
+      name: webplatform_suilabs
