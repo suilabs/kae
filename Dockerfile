@@ -6,6 +6,7 @@ WORKDIR /usr/src/app
 COPY package.json /usr/src/app
 COPY src /usr/src/app/src
 COPY package-lock.json /usr/src/app
+COPY public /usr/src/app/public
 
 ENV NODE_ENV=production
 
