@@ -15,12 +15,3 @@ jobs:
             sudo apt install -y rsync
             cd scripts
             bash updateRepo.sh >/dev/null
-workflows:
-  version: 2
-  build_and_deploy:
-    jobs:
-      - release:
-          filters:
-            branches:
-              only:
-                - master
