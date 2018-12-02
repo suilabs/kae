@@ -119,18 +119,17 @@ export class ImageSelectorBox extends React.Component {
     });
   };
 
-  render = () => (
+  render = () => [
     <div>
       <button className="cover-button" onClick={this.showOverlay}>
         <img src={this.props.src} className="cover-image"/>
       </button>
-      {this.state.show &&
-        <div className="image-selector-overlay__wrapper" onClick={this.closeOverlay}>
-            <ImageSelector onClick={this.setImage} onClose={this.closeOverlay}/>
-        </div>
-      }
+    </div>,
+    this.state.show &&
+    <div className="image-selector-overlay__wrapper" onClick={this.closeOverlay}>
+      <ImageSelector onClick={this.setImage} onClose={this.closeOverlay}/>
     </div>
-  )
+  ]
 }
 
 ImageSelectorBox.propType = {
