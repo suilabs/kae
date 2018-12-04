@@ -1,5 +1,6 @@
 .image-selector__wrapper {
-    position: fixed;
+    width: 100%;
+    position: absolute;
     padding: 1rem;
 
     border: 1px solid grey;
@@ -24,8 +25,9 @@
 
 .image-selector__list {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
     align-content: flex-start;
+    flex-wrap: wrap;
 }
 
 button.image-selector__item {

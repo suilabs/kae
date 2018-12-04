@@ -8,7 +8,7 @@ export const simulateEvent = (target, value) => ({target: { name: target, value 
 
 export const getServiceUrl = (serviceName) => {
  const serviceConfig = config[serviceName.toUpperCase()];
- const hostname = config.HOSTNAME;
+ const hostname = serviceConfig.host;
  let serviceEndpoint;
  if (hostname === 'localhost') {
    serviceEndpoint = `//${hostname}:${serviceConfig.port}`;
