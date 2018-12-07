@@ -21,20 +21,9 @@ export const PROJECT_QUERY = gql`
                 id
                 name
             }
-            template {
-                id
-                name
-                rows {
-                  id
-                  name
-                  type
-                }              
-            }
             configuration {
-              component {
-                id
-              }
-              value
+              componentId
+              propsJson
             }
         }
     }

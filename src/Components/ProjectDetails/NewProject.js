@@ -3,8 +3,6 @@ import { withRouter } from 'react-router-dom';
 import { Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost';
 
-import { flatten, getDefaultValueFromComponentType } from '../../Core/Utils';
-
 import ProjectDetailsForm from './ProjectDetailsForm';
 
 import bus from '../../Core/bus';
@@ -26,16 +24,10 @@ class ProjectDetails extends React.Component {
       url: project.url,
       name: project.name,
       description: project.description,
-      cover: project.cover.id,
-      type: project.type.id,
-      section: project.section.id,
-      template: project.template.id,
-      configuration: flatten(project.template.rows).map(
-        component => ({
-          component: component.id,
-          value: "",
-        })
-      )
+      cover: project.cover && project.cover.id,
+      type: project.type && project.type.id,
+      section: project.section && project.section.id,
+      configuration: project.configuration
     };
 
     mutation({

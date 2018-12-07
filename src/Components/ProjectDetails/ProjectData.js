@@ -4,8 +4,7 @@ import { Mutation } from 'react-apollo';
 import { gql } from 'apollo-boost';
 
 import { withProject } from '../GraphQL';
-import FieldFactory from '../Field/FieldFactory';
-import { flatten } from '../../Core/Utils';
+import FieldFactory, { components } from '../Field/FieldFactory';
 import { ButtonRow } from '../Form';
 import bus from '../../Core/bus';
 
@@ -21,21 +20,20 @@ const MUTATION_QUERY = gql`
 class ProjectData extends React.Component {
   constructor(props) {
     super(props);
-
+    debugger;
     this.state = {
-      configuration: props.data.project.configuration,
+      configuration: props.data.project.configuration
+        .map(({ componentId, propsJson }) => ({ componentId, propsJson: JSON.parse(propsJson) })),
       contentHasChanged: false,
+      newComponentSelectedId: null
     };
   }
 
-  onChange = ({target: {value, name}}) => {
+  onChange = (index) => ({target: {value, id, name}}) => {
+    const { configuration } = this.state;
+    configuration[index].propsJson[name] = value;
     this.setState({
-      configuration: this.state.configuration.map(conf => {
-        if (name === conf.component.id) {
-          return {...conf, value}
-        }
-        return conf;
-      }),
+      configuration,
       contentHasChanged: true
     });
   };
@@ -46,20 +44,23 @@ class ProjectData extends React.Component {
       return;
     }
     const newData = {
-      configuration: this.state.configuration.map(config => {
-        return {
-          component: config.component.id,
-          value: config.value
-        }
-      })
+      configuration: this.state.configuration
+        .map(({ componentId, propsJson }) => ({ componentId, propsJson: JSON.stringify(propsJson) })),
     };
 
+    debugger;
     update({
       variables: {
         id: this.props.data.project.id,
         project: newData
       }
     })
+  };
+
+  newComponentChangeHandler = ({target: { value }}) => {
+    this.setState({
+      newComponentSelectedId: value,
+    });
   };
 
   onError = (err) => {
@@ -72,17 +73,34 @@ class ProjectData extends React.Component {
   };
 
   render() {
-    const { data: { project } } = this.props;
-    const { configuration, contentHasChanged } = this.state;
+    const { configuration, contentHasChanged, newComponentSelectedId } = this.state;
     const submitText = contentHasChanged ? 'Update' : 'Finish';
-    const template = flatten(project.template.rows);
-    return [configuration.map(conf => {
+    return [configuration.map((conf, index) => {
       return FieldFactory.renderField(
-        template.find(c => c.id === conf.component.id),
-        conf.value,
-        this.onChange
+        conf.componentId,
+        conf.propsJson,
+        this.onChange(index)
       );
     }),
+      <div>
+        <select onChange={this.newComponentChangeHandler}>
+          <option selected={!newComponentSelectedId}>Select component</option>
+          {components.map(c => <option value={c.id} selected={c.id === newComponentSelectedId}>{c.id}</option>)}
+        </select>
+        <button
+          onClick={() => {
+            this.setState({
+              configuration: [
+                ...configuration,
+                { componentId: newComponentSelectedId, propsJson: {} }
+              ]
+            })
+          }}
+        >
+          Add New Component
+        </button>
+      </div>
+      ,
       <Mutation
         mutation={MUTATION_QUERY}
         onCompleted={this.onCompleted}
