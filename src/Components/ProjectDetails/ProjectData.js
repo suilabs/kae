@@ -8,6 +8,8 @@ import FieldFactory, { components } from '../Field/FieldFactory';
 import { ButtonRow } from '../Form';
 import bus from '../../Core/bus';
 
+import './ProjectData.css';
+
 const MUTATION_QUERY = gql`
   mutation UpdateProject($id: String!, $project: UpdateProjectInput) {
     updateProject(id: $id, project: $project) {
@@ -20,7 +22,6 @@ const MUTATION_QUERY = gql`
 class ProjectData extends React.Component {
   constructor(props) {
     super(props);
-    debugger;
     this.state = {
       configuration: props.data.project.configuration
         .map(({ componentId, propsJson }) => ({ componentId, propsJson: JSON.parse(propsJson) })),
@@ -48,7 +49,6 @@ class ProjectData extends React.Component {
         .map(({ componentId, propsJson }) => ({ componentId, propsJson: JSON.stringify(propsJson) })),
     };
 
-    debugger;
     update({
       variables: {
         id: this.props.data.project.id,
@@ -82,22 +82,27 @@ class ProjectData extends React.Component {
         this.onChange(index)
       );
     }),
-      <div>
-        <select onChange={this.newComponentChangeHandler}>
+      <div className='sui-template__select--wrapper'>
+        <select
+          className='sui-template__component-selector'
+          onChange={this.newComponentChangeHandler}
+        >
           <option selected={!newComponentSelectedId}>Select component</option>
           {components.map(c => <option value={c.id} selected={c.id === newComponentSelectedId}>{c.id}</option>)}
         </select>
         <button
+          className='sui-template__add-button'
           onClick={() => {
             this.setState({
               configuration: [
                 ...configuration,
                 { componentId: newComponentSelectedId, propsJson: {} }
-              ]
+              ],
+              newComponentSelectedId: null,
             })
           }}
         >
-          Add New Component
+          +
         </button>
       </div>
       ,

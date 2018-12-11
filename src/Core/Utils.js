@@ -10,7 +10,7 @@ export const getServiceUrl = (serviceName) => {
  const serviceConfig = config[serviceName.toUpperCase()];
  const hostname = serviceConfig.host;
  let serviceEndpoint;
- if (hostname === 'localhost') {
+ if (['localhost', '192.168.1.134'].includes(hostname)) {
    serviceEndpoint = `//${hostname}:${serviceConfig.port}`;
  } else {
    serviceEndpoint = `https://${serviceConfig.service}.${hostname}`;

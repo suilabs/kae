@@ -1,0 +1,16 @@
+.sui-component-heroImage__wrapper {
+  position: relative;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+
+  background-repeat: no-repeat;
+  background-position: top;
+  background-size: cover;
+
+  box-sizing: border-box;
+}
+
+.sui-component-heroImage__title {
+  padding: 1rem;
+}

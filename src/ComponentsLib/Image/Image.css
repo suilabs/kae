@@ -1,0 +1,9 @@
+.sui-component-image__wrapper {
+  float: left;
+
+  margin: 1rem 0;
+}
+
+.sui-component-image__wrapper img {
+  width: 100%;
+}

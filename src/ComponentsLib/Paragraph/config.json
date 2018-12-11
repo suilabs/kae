@@ -1,0 +1,22 @@
+{
+  "id": "paragraph",
+  "displayName": "Paragraph",
+  "config": {
+    "text": {
+      "type": "paragraph",
+      "label": "Text",
+      "required": true
+    },
+    "width": {
+      "type": "range",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "label": "Text width"
+    },
+    "textColor": {
+      "type": "color",
+      "label": "Text Color"
+    }
+  }
+}

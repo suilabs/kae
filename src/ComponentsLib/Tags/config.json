@@ -1,0 +1,11 @@
+{
+  "id": "tags",
+  "displayName": "Tags",
+  "config": {
+    "tags": {
+      "type": "tags",
+      "label": "Project Tags",
+      "required": true
+    }
+  }
+}

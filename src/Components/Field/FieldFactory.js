@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { HeroImageConfig } from '../../ComponentsLib/HeroImage';
-import { TagsConfig } from '../../ComponentsLib/Tags';
-import { ParagrafConfig } from '../../ComponentsLib/Paragraf';
-import { simulateEvent } from '../../Core/Utils';
-import { InputField, ImageSelectorBox} from '../Form';
+import { TagConfig, HeroImageConfig, ImageConfig, ParagraphConfig } from '../../ComponentsLib';
+import { InputField, ImageSelectorBox, LongInputField } from '../Form';
+import {simulateEvent} from "../../Core/Utils";
 
-export const components = [HeroImageConfig, TagsConfig, ParagrafConfig];
+import './FieldFactory.css';
+
+export const components = [HeroImageConfig, TagConfig, ImageConfig, ParagraphConfig];
 
 const FieldFactory = {
   renderField(componentId, props, onChange) {
@@ -16,22 +16,25 @@ const FieldFactory = {
     }
     return (
       <div className='sui-template-component--wrapper'>
-        <p>{compt.displayName}</p>
-        { Object.entries(compt.props).map(([key, value]) => {
+        <h3>{compt.displayName}</h3>
+        { Object.entries(compt.config).map(([key, value]) => {
           switch (value.type) {
             case 'string':
             case 'url':
               return <InputField id={key} name={value.label} onChange={onChange} value={props[key]} />;
             case 'image':
-              return <ImageSelectorBox id={key} src={(props[key] || {}).url} onChange={onChange} />;
+              return <ImageSelectorBox className='sui-template-component__field' id={key} src={(props[key] || {}).url} onChange={onChange} />;
             case 'tags':
               return <InputField id={key} name={value.label} onChange={onChange} value={props[key]} />;
+            case 'paragraph':
+              return <LongInputField id={key} name={value.label} onChange={onChange} value={props[key]} />;
             case 'range':
               props[key] = props[key] !== undefined ? props[key] : value.max;
               return (
                 <div>
                   <label>{value.label}</label>
-                  <span>{props[key]} %</span>
+                  <input className='sui-template-component-range__input' id={key} type='text' name={key} value={props[key]} onChange={onChange}/>
+                  <span>%</span>
                   <button
                     onClick={() => onChange(simulateEvent(key, Math.min(props[key] + value.step, value.max )))}
                   >
@@ -48,24 +51,6 @@ const FieldFactory = {
         }) }
       </div>
     )
-    // switch(type) {
-    //   case 'TEXT':
-    //     return <InputField id={id} name={name} value={value} onChange={onChange} />;
-    //   case 'IMAGE':
-    //     return (
-    //       <FieldsSection name={name}>
-    //         <ImageSelectorBox id={id} value={value} onChange={onChange} />;
-    //       </FieldsSection>
-    //     );
-    //   case 'ARRAY_IMAGE':
-    //     return (
-    //       <FieldsSection name={name}>
-    //         <ImageStrip srcset={value ? value.split(';') : []} id={id} onChange={onChange} />
-    //       </FieldsSection>
-    //     );
-    //   default:
-    //     console.err('Type not found', type)
-    // }
   }
 };
 

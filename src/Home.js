@@ -3,7 +3,7 @@ import React from 'react';
 import './Home.module.css';
 
 export default () => (
-  <main>
+  <main style={{padding: '1rem'}}>
     <h1>Welcome to KAE</h1>
     <h2>And now what?</h2>
     <p>
