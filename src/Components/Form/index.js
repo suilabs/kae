@@ -120,6 +120,13 @@ export class ImageSelectorBox extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    const should = nextProps.src !== this.props.src ||
+      nextState.show !== this.state.show;
+    debugger;
+    return !!should;
+  }
+
   setImage = (image) => {
     this.props.onChange(simulateEvent(this.props.id, image));
   };

@@ -33,7 +33,10 @@ class ProjectData extends React.Component {
       contentHasChanged: false,
       newComponentSelectedId: null,
       orderingEnabled: true,
+      animate: props.data.project.configuration.map(() => null),
     };
+
+    this.elements = props.data.project.configuration.map(() => null);
   }
 
   onChange = (index) => ({target: {value, id, name}}) => {
@@ -72,17 +75,34 @@ class ProjectData extends React.Component {
   };
 
   moveComponent = (x, y) => {
-    let { configuration } = this.state;
+    let { configuration, animate } = this.state;
+    const [...defaultAnim] = animate;
+    const diferential = (this.elements[y].offsetTop - this.elements[x].offsetTop);
+    animate[x] = {
+      diferentialTop: this.elements[y].offsetHeight,
+      diferentialBottom: 0,
+    };
+    animate[y] = {
+      diferentialTop: -(diferential + this.elements[y].offsetHeight),
+      diferentialBottom: diferential,
+    };
+    console.log(animate);
     this.setState({
-      configuration: swap(configuration, x, y),
+      animate,
     });
+    setTimeout(() => {
+      this.setState({
+        configuration: swap(configuration, x, y),
+        animate: defaultAnim,
+      });
+    }, 1000)
   };
 
   moveComponentUp = (index) => {
     if (index === 0) {
       return;
     }
-    this.moveComponent(index, index-1);
+    this.moveComponent(index-1, index);
   };
 
   moveComponentDown = (index) => {
@@ -108,11 +128,27 @@ class ProjectData extends React.Component {
   };
 
   render() {
-    const { configuration, contentHasChanged, newComponentSelectedId } = this.state;
+    const {
+      configuration,
+      contentHasChanged,
+      newComponentSelectedId,
+      animate,
+      duration = 0.3
+    } = this.state;
     const submitText = contentHasChanged ? 'Update' : 'Finish';
     return [configuration.map((conf, index) => {
+      const style = animate[index] && {
+        transition: `margin-top ${duration}s, margin-bottom ${duration}s`,
+        marginTop: `${animate[index].diferentialTop}px`,
+        marginBottom: `${animate[index].diferentialBottom}px`,
+      };
+      console.log(style);
       return (
-        <div className='sui-template__component'>
+        <div
+          className='sui-template__component'
+          style={style}
+          ref={el => this.elements[index] = el}
+        >
           <div className='sui-template__action-wrapper'>
             <div className='sui-template__action'>
               <div className='sui-template__reorder-wrapper'>
