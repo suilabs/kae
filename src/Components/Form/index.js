@@ -160,3 +160,34 @@ ImageSelectorBox.defaultProps = {
   className: '',
   src: 'https://e-fisiomedic.com/wp-content/uploads/2013/11/default-placeholder-300x300.png'
 };
+
+export const RangeInput = ({id, value, config, onChange}) => {
+  const tempValue = value !== undefined ? value : config.max;
+  return (
+    <div>
+      <label>{config.label}</label>
+      <button
+        onClick={() => onChange(simulateEvent(id, Math.min(tempValue + config.step, config.max )))}
+      >
+        +
+      </button>
+      <input className='field-range__input' id={id} type='text' name={id} value={tempValue} onChange={onChange}/>
+      <span>%</span>
+      <button
+        onClick={() => onChange(simulateEvent(id, Math.max(tempValue - config.step, config.min )))}
+      >
+        -
+      </button>
+    </div>
+  )
+};
+
+RangeInput.propType = {
+  id: PropTypes.string.isRequired,
+  value: PropTypes.shape({
+    step: PropTypes.number,
+    max: PropTypes.number,
+    min: PropTypes.number,
+  }),
+  
+};

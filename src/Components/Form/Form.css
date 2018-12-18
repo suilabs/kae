@@ -33,6 +33,11 @@
     box-sizing: border-box;
 }
 
+.field-range__input {
+    width: 3rem;
+    /*margin: 0 1rem;*/
+}
+
 .field {
     margin: 10px;
 }

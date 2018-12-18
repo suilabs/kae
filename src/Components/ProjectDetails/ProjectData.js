@@ -19,6 +19,11 @@ const MUTATION_QUERY = gql`
   }
 `;
 
+const swap = (a, x, y) => {
+  a[x] = a.splice(y, 1, a[x])[0];
+  return a;
+};
+
 class ProjectData extends React.Component {
   constructor(props) {
     super(props);
@@ -26,7 +31,8 @@ class ProjectData extends React.Component {
       configuration: props.data.project.configuration
         .map(({ componentId, propsJson }) => ({ componentId, propsJson: JSON.parse(propsJson) })),
       contentHasChanged: false,
-      newComponentSelectedId: null
+      newComponentSelectedId: null,
+      orderingEnabled: true,
     };
   }
 
@@ -57,6 +63,35 @@ class ProjectData extends React.Component {
     })
   };
 
+  removeComponent = (index) => {
+    let { configuration } = this.state;
+    configuration.splice(index, 1);
+    this.setState({
+      configuration,
+    });
+  };
+
+  moveComponent = (x, y) => {
+    let { configuration } = this.state;
+    this.setState({
+      configuration: swap(configuration, x, y),
+    });
+  };
+
+  moveComponentUp = (index) => {
+    if (index === 0) {
+      return;
+    }
+    this.moveComponent(index, index-1);
+  };
+
+  moveComponentDown = (index) => {
+    if (index === this.state.configuration.length - 1) {
+      return;
+    }
+    this.moveComponent(index, index+1);
+  };
+
   newComponentChangeHandler = ({target: { value }}) => {
     this.setState({
       newComponentSelectedId: value,
@@ -76,11 +111,34 @@ class ProjectData extends React.Component {
     const { configuration, contentHasChanged, newComponentSelectedId } = this.state;
     const submitText = contentHasChanged ? 'Update' : 'Finish';
     return [configuration.map((conf, index) => {
-      return FieldFactory.renderField(
-        conf.componentId,
-        conf.propsJson,
-        this.onChange(index)
-      );
+      return (
+        <div className='sui-template__component'>
+          <div className='sui-template__action-wrapper'>
+            <div className='sui-template__action'>
+              <div className='sui-template__reorder-wrapper'>
+                <button onClick={() => this.moveComponentUp(index)} disabled={index===0}>
+                  Up
+                </button>
+                <button onClick={() => this.moveComponentDown(index)} disabled={index===configuration.length-1}>
+                  Down
+                </button>
+              </div>
+              <button onClick={() => this.removeComponent(index)}>
+                Delete
+              </button>
+            </div>
+          </div>
+          <div className='sui-template__component__component'>
+            {
+              FieldFactory.renderField(
+                conf.componentId,
+                conf.propsJson,
+                this.onChange(index)
+              )
+            }
+          </div>
+        </div>
+      )
     }),
       <div className='sui-template__select--wrapper'>
         <select

@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { TagConfig, HeroImageConfig, ImageConfig, ParagraphConfig } from '../../ComponentsLib';
-import { InputField, ImageSelectorBox, LongInputField } from '../Form';
-import {simulateEvent} from "../../Core/Utils";
+import { InputField, ImageSelectorBox, LongInputField, RangeInput } from '../Form';
 
 import './FieldFactory.css';
 
@@ -29,24 +28,12 @@ const FieldFactory = {
             case 'paragraph':
               return <LongInputField id={key} name={value.label} onChange={onChange} value={props[key]} />;
             case 'range':
-              props[key] = props[key] !== undefined ? props[key] : value.max;
-              return (
-                <div>
-                  <label>{value.label}</label>
-                  <input className='sui-template-component-range__input' id={key} type='text' name={key} value={props[key]} onChange={onChange}/>
-                  <span>%</span>
-                  <button
-                    onClick={() => onChange(simulateEvent(key, Math.min(props[key] + value.step, value.max )))}
-                  >
-                    +
-                  </button>
-                  <button
-                    onClick={() => onChange(simulateEvent(key, Math.max(props[key] - value.step, value.min )))}
-                  >
-                    -
-                  </button>
-                </div>
-              )
+              return <RangeInput
+                id={key}
+                config={value}
+                value={props[key]}
+                onChange={onChange}
+              />;
           }
         }) }
       </div>

@@ -29,3 +29,30 @@
     padding: 0 1rem 1rem;
     display: flex;
 }
+
+.sui-template__component {
+    display: flex;
+}
+
+.sui-template__component__component {
+    flex: 1
+}
+
+.sui-template__action-wrapper {
+    margin: 1rem .5rem;
+}
+
+.sui-template__action {
+    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.sui-template__reorder-wrapper {
+    float: left;
+    display: flex;
+    flex-direction: column;
+}
+

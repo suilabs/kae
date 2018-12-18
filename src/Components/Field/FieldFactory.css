@@ -5,11 +5,3 @@
     border: 1px solid #8d4747;
     box-shadow: 0 0 5px rgba(141, 71, 71, 0.2);
 }
-
-.sui-template-component__field {
-}
-
-.sui-template-component-range__input {
-    width: 3rem;
-    margin: 0 1rem;
-}
