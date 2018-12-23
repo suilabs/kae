@@ -7,7 +7,7 @@ import './ImageSelector.css';
 
 const ImageListItem = ({className, image, onClick}) => (
   <button className={`cover-button ${className}`} onClick={() => onClick(image)}>
-    <img src={image.url} />
+    <img src={image.url} alt="list item"/>
   </button>
 );
 

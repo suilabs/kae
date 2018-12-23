@@ -146,7 +146,7 @@ export class ImageSelectorBox extends React.Component {
   render = () => [
     <div className={this.props.className}>
       <button className="cover-button" onClick={this.showOverlay}>
-        <img src={this.props.src} className="cover-image"/>
+        <img src={this.props.src} className="cover-image" alt="selector box"/>
       </button>
     </div>,
     this.state.show &&

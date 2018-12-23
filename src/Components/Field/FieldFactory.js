@@ -34,6 +34,8 @@ const FieldFactory = {
                 value={props[key]}
                 onChange={onChange}
               />;
+            default:
+              return <div>UNIMPLEMENTED {key}</div>
           }
         }) }
       </div>
