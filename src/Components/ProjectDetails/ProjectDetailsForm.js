@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {withProjectTypes, withSections, withTemplates} from '../GraphQL';
+import {withProjectTypes, withSections} from '../GraphQL';
 import {FieldsSection, SelectInput, InputField, ButtonRow, ImageSelectorBox} from '../Form/index';
 
 const ProjectTypesSelector = withProjectTypes(({ data: { projectTypes }, value, onChange }) => (
@@ -10,13 +10,6 @@ const ProjectTypesSelector = withProjectTypes(({ data: { projectTypes }, value, 
 
 const SectionsSelector = withSections(({ data: { sections }, value, onChange }) => (
   <SelectInput options={sections} name="Section" onChange={onChange} value={value} />
-));
-
-const TemplateSelector = withTemplates(({data: { templates }, value, onChange }) => (
-  <SelectInput name="Template" options={templates} onChange={(e) => {
-    const value = templates.find(t => t.id === e.target.value);
-    onChange({target: {value, name: e.target.name}});
-  }} value={value} />
 ));
 
 class ProjectDetailsForm extends React.Component {
@@ -31,7 +24,6 @@ class ProjectDetailsForm extends React.Component {
       cover: project.cover,
       type: project.type,
       section: project.section,
-      template: project.template,
       showOverlay: false,
       contentHasChanged: false,
     }
@@ -43,7 +35,6 @@ class ProjectDetailsForm extends React.Component {
     switch (targetName) {
       case 'section':
       case 'type':
-      case 'template':
         const targetObject = this.state[targetName];
         let newValue = target.value;
         if (typeof target.value === 'string') {
@@ -88,11 +79,10 @@ class ProjectDetailsForm extends React.Component {
       cover,
       type,
       section,
-      template,
       showOverlay,
       contentHasChanged,
     } = this.state;
-    let coverUrl, typeId, sectionId, templateId, templateRows;
+    let coverUrl, typeId, sectionId;
     if (cover) {
       coverUrl = cover.url;
     } else {
@@ -103,9 +93,6 @@ class ProjectDetailsForm extends React.Component {
     }
     if (section) {
       sectionId = section.id;
-    }
-    if (template) {
-      templateId = template.id;
     }
     const submitText = contentHasChanged ? 'Update' : 'Next';
     return (
@@ -122,7 +109,6 @@ class ProjectDetailsForm extends React.Component {
           <FieldsSection name="Classification">
             <ProjectTypesSelector onChange={this.onChange} value={typeId} />
             <SectionsSelector onChange={this.onChange} value={sectionId} />
-            <TemplateSelector onChange={this.onChange} value={templateId}/>
           </FieldsSection>
         </div>
         <ButtonRow

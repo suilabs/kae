@@ -1,0 +1,58 @@
+.sui-template__add-button {
+    font-size: 1.5rem;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    background-color: #8b034f;
+    color: white;
+    border: 0;
+    line-height: 2rem;
+    text-align: center;
+}
+
+.sui-template__component-selector {
+    background-color: #8b034f;
+    color: white;
+    height: 1rem;
+    padding: .5rem;
+    border-radius: 5px;
+    box-sizing: content-box;
+    border: 0;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    margin-right: 1rem;
+}
+
+.sui-template__select--wrapper {
+    padding: 0 1rem 1rem;
+    display: flex;
+}
+
+.sui-template__component {
+    display: flex;
+}
+
+.sui-template__component__component {
+    flex: 1
+}
+
+.sui-template__action-wrapper {
+    margin: 1rem .5rem;
+}
+
+.sui-template__action {
+    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.sui-template__reorder-wrapper {
+    float: left;
+    display: flex;
+    flex-direction: column;
+}
+

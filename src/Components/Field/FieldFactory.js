@@ -1,28 +1,43 @@
 import React from 'react';
-import { InputField, ImageSelectorBox, FieldsSection } from '../../Components/Form';
-import ImageStrip from './ImageStrip';
+
+import { TagConfig, HeroImageConfig, ImageConfig, ParagraphConfig } from '../../ComponentsLib';
+import { InputField, ImageSelectorBox, LongInputField, RangeInput } from '../Form';
+
+import './FieldFactory.css';
+
+export const components = [HeroImageConfig, TagConfig, ImageConfig, ParagraphConfig];
 
 const FieldFactory = {
-  renderField(template, value, onChange) {
-    const { id, type, name } = template;
-    switch(type) {
-      case 'TEXT':
-        return <InputField id={id} name={name} value={value} onChange={onChange} />;
-      case 'IMAGE':
-        return (
-          <FieldsSection name={name}>
-            <ImageSelectorBox id={id} value={value} onChange={onChange} />;
-          </FieldsSection>
-        );
-      case 'ARRAY_IMAGE':
-        return (
-          <FieldsSection name={name}>
-            <ImageStrip srcset={value ? value.split(';') : []} id={id} onChange={onChange} />
-          </FieldsSection>
-        );
-      default:
-        console.err('Type not found', type)
+  renderField(componentId, props, onChange) {
+    const compt = components.filter(c => c.id === componentId)[0];
+    if (!compt) {
+      return <p>Component {componentId} not found</p>;
     }
+    return (
+      <div className='sui-template-component--wrapper'>
+        <h3>{compt.displayName}</h3>
+        { Object.entries(compt.config).map(([key, value]) => {
+          switch (value.type) {
+            case 'string':
+            case 'url':
+              return <InputField id={key} name={value.label} onChange={onChange} value={props[key]} />;
+            case 'image':
+              return <ImageSelectorBox className='sui-template-component__field' id={key} src={(props[key] || {}).url} onChange={onChange} />;
+            case 'tags':
+              return <InputField id={key} name={value.label} onChange={onChange} value={props[key]} />;
+            case 'paragraph':
+              return <LongInputField id={key} name={value.label} onChange={onChange} value={props[key]} />;
+            case 'range':
+              return <RangeInput
+                id={key}
+                config={value}
+                value={props[key]}
+                onChange={onChange}
+              />;
+          }
+        }) }
+      </div>
+    )
   }
 };
 

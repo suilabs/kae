@@ -1,0 +1,23 @@
+{
+  "id": "image",
+  "displayName": "Image",
+  "config": {
+    "image": {
+      "type": "image",
+      "label": "Image",
+      "require": true
+    },
+    "alt": {
+      "type": "string",
+      "label": "Alternative text",
+      "required": true
+    },
+    "widht": {
+      "type": "range",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "Width"
+    }
+  }
+}

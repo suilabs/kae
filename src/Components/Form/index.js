@@ -23,6 +23,23 @@ InputField.defaultTypes = {
   value: '',
 };
 
+export const LongInputField = ({id, name, value, onChange, ...props}) => {
+  const idName = id || name.replace(' ', '_');
+  return (<div className="field">
+    <label htmlFor={idName}>{name}</label>
+    <textarea autoComplete={false} value={value || ''} name={idName} onChange={onChange} {...props} />
+  </div>);
+};
+
+LongInputField.propTypes = {
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string,
+};
+
+LongInputField.defaultTypes = {
+  value: '',
+};
+
 export const FieldsSection = ({ name, children }) => (
   <div className="fields-section">
     <span className="fields-section__name">{name}</span>
@@ -103,6 +120,13 @@ export class ImageSelectorBox extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    const should = nextProps.src !== this.props.src ||
+      nextState.show !== this.state.show;
+    debugger;
+    return !!should;
+  }
+
   setImage = (image) => {
     this.props.onChange(simulateEvent(this.props.id, image));
   };
@@ -120,20 +144,57 @@ export class ImageSelectorBox extends React.Component {
   };
 
   render = () => [
-    <div>
+    <div className={this.props.className}>
       <button className="cover-button" onClick={this.showOverlay}>
         <img src={this.props.src} className="cover-image"/>
       </button>
     </div>,
     this.state.show &&
-    <div className="image-selector-overlay__wrapper" onClick={this.closeOverlay}>
+    <div className='image-selector-overlay__wrapper' onClick={this.closeOverlay}>
       <ImageSelector onClick={this.setImage} onClose={this.closeOverlay}/>
     </div>
   ]
 }
 
 ImageSelectorBox.propType = {
-  src: PropTypes.string.isRequired,
+  src: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
+  className: PropTypes.string,
+};
+
+ImageSelectorBox.defaultProps = {
+  className: '',
+  src: 'https://e-fisiomedic.com/wp-content/uploads/2013/11/default-placeholder-300x300.png'
+};
+
+export const RangeInput = ({id, value, config, onChange}) => {
+  const tempValue = value !== undefined ? value : config.max;
+  return (
+    <div>
+      <label>{config.label}</label>
+      <button
+        onClick={() => onChange(simulateEvent(id, Math.min(tempValue + config.step, config.max )))}
+      >
+        +
+      </button>
+      <input className='field-range__input' id={id} type='text' name={id} value={tempValue} onChange={onChange}/>
+      <span>%</span>
+      <button
+        onClick={() => onChange(simulateEvent(id, Math.max(tempValue - config.step, config.min )))}
+      >
+        -
+      </button>
+    </div>
+  )
+};
+
+RangeInput.propType = {
+  id: PropTypes.string.isRequired,
+  value: PropTypes.shape({
+    step: PropTypes.number,
+    max: PropTypes.number,
+    min: PropTypes.number,
+  }),
+  
 };

@@ -1,0 +1,7 @@
+.sui-template-component--wrapper {
+    display: flow-root;
+    margin: 1rem;
+    padding: 1rem;
+    border: 1px solid #8d4747;
+    box-shadow: 0 0 5px rgba(141, 71, 71, 0.2);
+}

@@ -1,0 +1,31 @@
+{
+  "id": "heroImage",
+  "displayName": "Hero Image",
+  "config": {
+    "image": {
+      "type": "image",
+      "label": "Image",
+      "require": true
+    },
+    "height": {
+      "type": "string",
+      "label": "Image Height"
+    },
+    "title": {
+      "type": "string",
+      "label": "Project Title"
+    },
+    "titleColor": {
+      "type": "color",
+      "label": "Title Color"
+    },
+    "subTitle": {
+      "type": "string",
+      "label": "Project summary"
+    },
+    "subTitleColor": {
+      "type": "color",
+      "label": "Subtitle Color"
+    }
+  }
+}

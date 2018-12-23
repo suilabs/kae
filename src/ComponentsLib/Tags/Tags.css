@@ -1,0 +1,13 @@
+.sui-component-tags__wrapper {
+  margin: 1rem 0;
+}
+
+.sui-component-tags__item::after {
+  content: '·';
+  margin: 0 1rem;
+}
+
+.sui-component-tags__item:last-child::after {
+  content: '';
+  margin: 0;
+}
