@@ -40,14 +40,16 @@ const client = new ApolloClient({
   }
 });
 
-const ClearLink = withRouter((props) => (
+const ClearLink = withRouter(({children, ...props}) => (
   <a
     {...props}
     onClick={() => {
       props.history.push(props.to);
       bus.publish('clearMessage');
     }}
-  />
+  >
+    {children}
+  </a>
 ));
 
 const menu = () => [

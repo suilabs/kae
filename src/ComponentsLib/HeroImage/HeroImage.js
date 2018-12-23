@@ -5,11 +5,6 @@ import HeroImageConfig from './config';
 
 import './HeroImage.css';
 
-function padZero(str, len = 2) {
-  const zeros = new Array(len).join('0');
-  return (zeros + str).slice(-len);
-}
-
 function invertColor(inHex, bw) {
   let hex = inHex;
   if (hex.indexOf('#') === 0) {

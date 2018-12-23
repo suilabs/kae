@@ -24,7 +24,6 @@ class ProjectDetailsForm extends React.Component {
       cover: project.cover,
       type: project.type,
       section: project.section,
-      showOverlay: false,
       contentHasChanged: false,
     }
   }
@@ -79,7 +78,6 @@ class ProjectDetailsForm extends React.Component {
       cover,
       type,
       section,
-      showOverlay,
       contentHasChanged,
     } = this.state;
     let coverUrl, typeId, sectionId;
