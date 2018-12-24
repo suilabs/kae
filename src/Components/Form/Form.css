@@ -71,3 +71,32 @@ textarea {
     font-family: inherit;
     font-weight: lighter;
 }
+
+.field-color--wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.field-color__display {
+    flex-grow: 1;
+    position: relative;
+    background-color: white;
+}
+
+.field-color__display button {
+    border: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    mix-blend-mode: difference;
+    color: white;
+    background-color: transparent;
+}
+
+.field-color__picker--wrapper {
+    position: absolute;
+}
+
+.field-color__picker {
+    position: relative;
+}

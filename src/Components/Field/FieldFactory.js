@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { TagConfig, HeroImageConfig, ImageConfig, ParagraphConfig } from '../../ComponentsLib';
-import { InputField, ImageSelectorBox, LongInputField, RangeInput } from '../Form';
+import { TagConfig, HeroImageConfig, ImageConfig, ParagraphConfig, TitleConfig } from '../../ComponentsLib';
+import { InputField, ImageSelectorBox, LongInputField, RangeInput, ColorInput } from '../Form';
 
 import './FieldFactory.css';
 
-export const components = [HeroImageConfig, TagConfig, ImageConfig, ParagraphConfig];
+export const components = [HeroImageConfig, TagConfig, ImageConfig, ParagraphConfig, TitleConfig];
 
 const FieldFactory = {
   renderField(componentId, props, onChange) {
@@ -31,6 +31,14 @@ const FieldFactory = {
               return <RangeInput
                 id={key}
                 config={value}
+                value={props[key]}
+                onChange={onChange}
+              />;
+            case 'color':
+              console.log(value);
+              return <ColorInput
+                id={key}
+                name={value.label}
                 value={props[key]}
                 onChange={onChange}
               />;
