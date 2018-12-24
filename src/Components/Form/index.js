@@ -1,5 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import { SketchPicker } from 'react-color';
 
 import ImageSelector from '../Images/ImageSelector';
 import { simulateEvent } from '../../Core/Utils';
@@ -196,5 +198,85 @@ RangeInput.propType = {
     max: PropTypes.number,
     min: PropTypes.number,
   }),
-  
+};
+
+export class ColorInput extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showColorPicker: false,
+    };
+  }
+
+  handleChangeComplete = (color) => {
+    const { onChange, id } = this.props;
+    const rgbColor = this.toRGBAString(color.rgb);
+    onChange(simulateEvent(id, rgbColor));
+  };
+
+  toRGBAString = ({r, g, b, a}) => `rgba(${r}, ${g}, ${b}, ${a})`;
+
+  render() {
+    const { id, name, value, onChange } = this.props;
+    const { showColorPicker, top, left } = this.state;
+    console.log(top, left);
+    const currentColor = value;
+    return [
+      <div className=" field field-color--wrapper">
+        <label>
+          {name}
+          <input id={id} name={id} value={currentColor} onChange={onChange}/>
+        </label>
+        <div
+          className="field-color__display"
+          style={{ backgroundColor: currentColor }}
+        >
+          <button
+            onClick={(event) => {
+              console.log(event.clientX, event.clientY);
+              console.log(event.pageX, event.pageY);
+              this.setState({
+                showColorPicker: !this.state.showColorPicker,
+                top: `${event.clientY}px`,
+                left: `${event.clientX}px`,
+              })
+            }}
+          >
+            {
+              showColorPicker ? 'Close color picker' : 'Open Color Picker'
+            }
+          </button>
+        </div>
+      </div>,
+      showColorPicker && <PickerPortal>
+        <div
+          style={{
+            top: top,
+            left: left,
+          }}
+          className="field-color__picker--wrapper"
+        >
+          <SketchPicker
+            className="field-color__picker"
+            color={value}
+            onChangeComplete={this.handleChangeComplete}
+          />
+        </div>
+      </PickerPortal>
+    ];
+  }
+}
+
+ColorInput.propTypes = {
+  id: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  default: PropTypes.string.isRequired,
+};
+
+const PickerPortal = (props) => {
+  return ReactDOM.createPortal(
+    props.children,
+    document.body,
+  );
 };

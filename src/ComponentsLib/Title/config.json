@@ -1,0 +1,28 @@
+{
+  "id": "title",
+  "displayName": "Title",
+  "config": {
+    "title": {
+      "type": "string",
+      "label": "Project details Title",
+      "required": true
+    },
+    "subtitle": {
+      "type": "string",
+      "label": "Project subtitle",
+      "required": true
+    },
+    "titleColor": {
+      "type": "color",
+      "label": "Title Text color",
+      "default": "black",
+      "required": false
+    },
+    "subTitleColor": {
+      "type": "color",
+      "label": "Subtitle Text color",
+      "default": "black",
+      "required": false
+    }
+  }
+}

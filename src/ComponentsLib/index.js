@@ -6,4 +6,6 @@ export { default as SuiHeroImage } from './HeroImage/HeroImage';
 export { default as HeroImageConfig } from './HeroImage/config';
 export { default as SuiImage } from './Image/Image';
 export { default as ImageConfig } from './Image/config';
+export { default as SuiTitle } from './Title/Title';
+export { default as TitleConfig } from './Title/config';
 
