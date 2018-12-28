@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {withProjectTypes, withSections} from '../GraphQL';
-import {FieldsSection, SelectInput, InputField, ButtonRow, ImageSelectorBox} from '../Form/index';
+import {FieldsSection, SelectInput, InputField, ButtonRow, ButtonRowTypes, ImageSelectorBox} from '../Form/index';
 
 const ProjectTypesSelector = withProjectTypes(({ data: { projectTypes }, value, onChange }) => (
   <SelectInput options={projectTypes} name="Type" onChange={onChange} value={value} />
@@ -25,12 +25,16 @@ class ProjectDetailsForm extends React.Component {
       type: project.type,
       section: project.section,
       contentHasChanged: false,
+      newProject: !Object.keys(project).length,
+      whatsChanged: [],
     }
   }
 
   onChange = (event) => {
     const { target } = event;
     const targetName = target.name.toLowerCase();
+    const { whatsChanged, newProject } = this.state;
+    let newState;
     switch (targetName) {
       case 'section':
       case 'type':
@@ -39,20 +43,37 @@ class ProjectDetailsForm extends React.Component {
         if (typeof target.value === 'string') {
           newValue = { id: target.value };
         }
-        this.setState({
+        newState = {
           [targetName]: {
             ...targetObject,
             ...newValue
           },
-          contentHasChanged: true,
-        });
+        };
         break;
       default:
-        this.setState({
+        newState = {
           [target.name.toLowerCase()]: target.value,
-          contentHasChanged: true,
-        });
+        };
     }
+    if (!newProject) {
+      if ((targetName === 'cover' && this.props.data.project.cover.url === newState.cover.url) ||
+        JSON.stringify(this.props.data.project[targetName]) === JSON.stringify(newState[targetName])) {
+        whatsChanged.splice(whatsChanged.indexOf(targetName), 1);
+      } else if (whatsChanged.indexOf(targetName) === -1){
+        whatsChanged.push(targetName);
+      }
+    } else {
+      if (newState[targetName] && whatsChanged.indexOf(targetName) === -1) {
+        whatsChanged.push(targetName);
+      } else {
+        whatsChanged.splice(whatsChanged.indexOf(targetName), 1);
+      }
+    }
+    this.setState({
+      ...newState,
+      whatsChanged,
+      contentHasChanged: whatsChanged.length !== 0,
+    });
   };
 
   onSubmit = (e) => {
@@ -79,6 +100,7 @@ class ProjectDetailsForm extends React.Component {
       type,
       section,
       contentHasChanged,
+      newProject,
     } = this.state;
     let coverUrl, typeId, sectionId;
     if (cover) {
@@ -93,6 +115,7 @@ class ProjectDetailsForm extends React.Component {
       sectionId = section.id;
     }
     const submitText = contentHasChanged ? 'Update' : 'Next';
+    let buttonType = contentHasChanged ? ButtonRowTypes.UPDATE : ButtonRowTypes.NORMAL;
     return (
       <div>
         <div className="projectDetails">
@@ -110,10 +133,11 @@ class ProjectDetailsForm extends React.Component {
           </FieldsSection>
         </div>
         <ButtonRow
-          submitText={submitText}
+          submitText={newProject ? 'Create' : submitText}
           onSubmit={this.onSubmit}
           onDelete={this.onDelete}
           deleteText="Delete"
+          type={newProject && contentHasChanged ? ButtonRowTypes.CREATE : buttonType}
         />
       </div>
     );

@@ -34,6 +34,9 @@ class ImageDetails extends React.Component {
   };
 
   onUpdate = (mutation) => ({name, url}) => {
+    if (!url) {
+      return;
+    }
     const image = {
       id: this.props.data.image.id,
       name, url,

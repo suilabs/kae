@@ -60,6 +60,9 @@ class SectionList extends React.Component {
   submitDeletion = (mutation, id) => (e) => {
     e.preventDefault();
 
+    if (!window.confirm('Delete? Deleting this can break projects')) {
+      return;
+    }
     mutation({
       variables: {
         id
@@ -102,7 +105,14 @@ class SectionList extends React.Component {
                       }}
                     >
                       {
-                        (deleteSection) => ( <button onClick={this.submitDeletion(deleteSection, section.id)}>-</button> )
+                        (deleteSection) => (
+                          <button
+                            className='action delete-action'
+                            onClick={this.submitDeletion(deleteSection, section.id)}
+                          >
+                            -
+                          </button>
+                        )
                       }
                     </Mutation>
                   </div>
@@ -126,7 +136,12 @@ class SectionList extends React.Component {
                 }}
               >
                 { (insertSection)  => (
-                  <button onClick={this.submitSection(insertSection)}>+</button>
+                  <button
+                    className='action create-action'
+                    onClick={this.submitSection(insertSection)}
+                  >
+                    +
+                  </button>
                 ) }
               </Mutation>
             </div>

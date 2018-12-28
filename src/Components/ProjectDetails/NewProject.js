@@ -20,6 +20,9 @@ const MUTATION_QUERY = gql`
 
 class ProjectDetails extends React.Component {
   onSubmit = (mutation) => (project) => {
+    if (!project) {
+      return;
+    }
     const data = {
       url: project.url,
       name: project.name,
@@ -50,6 +53,7 @@ class ProjectDetails extends React.Component {
         { (insertProject) =>
           <ProjectDetailsForm
             onSubmit={this.onSubmit(insertProject)}
+            newProject
           />
         }
       </Mutation>

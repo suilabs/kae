@@ -6,7 +6,11 @@ import ImageDetailsForm from './ImageDetailsForm';
 import bus from '../../Core/bus';
 
 class NewImage extends React.Component {
-  createImage = (mutation) => (image) => mutation({ variables: image });
+  createImage = (mutation) => (image) => {
+    if (image) {
+      mutation({ variables: image });
+    }
+  };
 
   onComplete = () => {
     this.props.history.push('/images');

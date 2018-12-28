@@ -60,6 +60,9 @@ class ProjectTypesList extends React.Component {
   submitDeletion = (mutation, id) => (e) => {
     e.preventDefault();
 
+    if (!window.confirm('Delete? Deleting this can break projects')) {
+      return;
+    }
     mutation({
       variables: {
         id
@@ -102,7 +105,14 @@ class ProjectTypesList extends React.Component {
                       }}
                     >
                       {
-                        (deleteType) => ( <button onClick={this.submitDeletion(deleteType, type.id)}>-</button> )
+                        (deleteType) => (
+                          <button
+                            className='action delete-action'
+                            onClick={this.submitDeletion(deleteType, type.id)}
+                          >
+                            -
+                          </button>
+                        )
                       }
                     </Mutation>
                   </div>
@@ -126,7 +136,12 @@ class ProjectTypesList extends React.Component {
                 }}
               >
                 { (insertType)  => (
-                  <button onClick={this.submitType(insertType)}>+</button>
+                  <button
+                    className='action create-action'
+                    onClick={this.submitType(insertType)}
+                  >
+                    +
+                  </button>
                 ) }
               </Mutation>
             </div>

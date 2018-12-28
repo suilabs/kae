@@ -1,7 +1,7 @@
 import React from 'react';
 import FileUpload from '../../Service/FileUpload';
 
-import {InputField, FieldsSection, FileField, ButtonRow} from '../Form';
+import {InputField, FieldsSection, FileField, ButtonRow, ButtonRowTypes} from '../Form';
 import Thumbnail from '../Thumbnail';
 
 import './ImageDetailsForm.css';
@@ -15,6 +15,8 @@ class ImageDetailsForm extends React.Component {
       url: props.url,
       file: null,
       uploading: false,
+      contentHasChanged: false,
+      newImage: !props.name && !props.url,
     };
   }
 
@@ -22,13 +24,17 @@ class ImageDetailsForm extends React.Component {
     const targetName = target.name.toLowerCase();
     this.setState({
       [targetName]: target.value,
+      contentHasChanged: !!this.state.url,
     });
   };
 
   onSubmit = (e) => {
     e.preventDefault();
 
-    const {name, url} = this.state;
+    const {name, url, contentHasChanged} = this.state;
+    if (!contentHasChanged) {
+      this.props.onSubmit({});
+    }
     this.props.onSubmit({
       name, url
     });
@@ -41,9 +47,9 @@ class ImageDetailsForm extends React.Component {
     return FileUpload.upload(target.files[0])
       .then((url) => {
         this.setState({
-
           url,
           uploading: false,
+          contentHasChanged: true,
         });
       });
   };
@@ -57,7 +63,7 @@ class ImageDetailsForm extends React.Component {
   };
 
   render() {
-    const { name, url, file , uploading } = this.state;
+    const { name, url, file , uploading, newImage, contentHasChanged } = this.state;
     return (
       <div>
         <FieldsSection name="Image Details">
@@ -73,10 +79,11 @@ class ImageDetailsForm extends React.Component {
           </div>
         </FieldsSection>
         <ButtonRow
-          submitText="Update"
+          submitText='Save'
           onSubmit={this.onSubmit}
           onDelete={this.onDelete}
           deleteText="Delete"
+          type={!contentHasChanged ? ButtonRowTypes.NORMAL : newImage ? ButtonRowTypes.CREATE : ButtonRowTypes.UPDATE}
         />
       </div>
     );
