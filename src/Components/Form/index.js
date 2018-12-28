@@ -91,11 +91,17 @@ export const FileField = ({name, file, onChange}) => (
   </div>
 );
 
-export const ButtonRow = ({deleteText, onDelete, canDelete, submitText, onSubmit}) => (
+export const ButtonRowTypes = {
+  UPDATE: 'modify-action',
+  CREATE: 'create-action',
+  NORMAL: 'no-side-effect-action',
+};
+
+export const ButtonRow = ({deleteText, onDelete, canDelete, submitText, onSubmit, type}) => (
   <div className={`button-row ${onDelete || 'only-right'}`}>
     {onDelete &&
-    <button className="delete-button" onClick={onDelete} disabled={canDelete}>{deleteText}</button>}
-    <button className="update-button" onClick={onSubmit}>{submitText}</button>
+    <button className="delete-button delete-action" onClick={onDelete} disabled={canDelete}>{deleteText}</button>}
+    <button className={`update-button ${type}`} onClick={onSubmit}>{submitText}</button>
   </div>
 );
 
@@ -105,11 +111,13 @@ ButtonRow.propTypes = {
   canDelete: PropTypes.bool,
   deleteText: PropTypes.string,
   onDelete: PropTypes.func,
+  type: PropTypes.oneOf(Object.values(ButtonRowTypes)),
 };
 
 ButtonRow.defaultProps = {
   canDelete: false,
   deleteText: 'Delete',
+  type: ButtonRowTypes.NORMAL,
 };
 
 export class ImageSelectorBox extends React.Component {
@@ -125,7 +133,6 @@ export class ImageSelectorBox extends React.Component {
   shouldComponentUpdate(nextProps, nextState, nextContext) {
     const should = nextProps.src !== this.props.src ||
       nextState.show !== this.state.show;
-    debugger;
     return !!should;
   }
 

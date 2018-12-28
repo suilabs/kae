@@ -64,3 +64,43 @@ nav {
 svg {
   width: 1px;
 }
+
+.create-action,
+.modify-action,
+.delete-action,
+.no-side-effect-action {
+  color: white;
+  transition: background-color 0.1s ease-in-out, color .1s ease-in-out;
+}
+
+.no-side-effect-action {
+  background-color: #7b7b7b;
+  border: 1px solid #5e5e5e;
+}
+
+.create-action {
+  background-color: #5ac65b;
+  border: 1px solid #37823e;
+}
+
+.create-action:hover {
+  background-color: #37823e;
+}
+
+.modify-action {
+  background-color: #5a5bc6;
+  border: 1px solid #373e82;
+}
+
+.modify-action:hover {
+  background-color: #373e82;
+}
+
+.delete-action {
+  background-color: #c65a5b;
+  border: 1px solid #82373e;
+}
+
+.delete-action:hover {
+  background-color: #82373e;
+}

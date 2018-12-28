@@ -10,14 +10,7 @@
 
 .update-button, .delete-button {
     padding: 1rem;
-    border: 1px solid #c65a5b;
     border-radius: 3px;
-
-    transition: background-color 0.3s ease-in-out, color .1s ease-in-out;
-}
-
-.update-button:hover, delete-button:hover {
-    background-color: #8d4747;
 }
 
 .cover-button {
