@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './Home.module.css';
+import './Home.css';
 
 export default () => (
   <main style={{padding: '1rem'}}>

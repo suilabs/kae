@@ -24,6 +24,8 @@ const swap = (a, x, y) => {
   return a;
 };
 
+const ANIMATION_DURATION = 300; // milliseconds
+
 class ProjectData extends React.Component {
   constructor(props) {
     super(props);
@@ -77,16 +79,15 @@ class ProjectData extends React.Component {
   moveComponent = (x, y) => {
     let { configuration, animate } = this.state;
     const [...defaultAnim] = animate;
-    const diferential = (this.elements[y].offsetTop - this.elements[x].offsetTop);
+    const differential = (this.elements[y].offsetTop - this.elements[x].offsetTop);
     animate[x] = {
       diferentialTop: this.elements[y].offsetHeight,
       diferentialBottom: 0,
     };
     animate[y] = {
-      diferentialTop: -(diferential + this.elements[y].offsetHeight),
-      diferentialBottom: diferential,
+      diferentialTop: -(differential + this.elements[y].offsetHeight),
+      diferentialBottom: differential,
     };
-    console.log(animate);
     this.setState({
       animate,
     });
@@ -95,7 +96,7 @@ class ProjectData extends React.Component {
         configuration: swap(configuration, x, y),
         animate: defaultAnim,
       });
-    }, 1000)
+    }, ANIMATION_DURATION)
   };
 
   moveComponentUp = (index) => {
@@ -133,7 +134,7 @@ class ProjectData extends React.Component {
       contentHasChanged,
       newComponentSelectedId,
       animate,
-      duration = 0.3
+      duration = ANIMATION_DURATION/1000
     } = this.state;
     const submitText = contentHasChanged ? 'Update' : 'Finish';
     return [configuration.map((conf, index) => {
