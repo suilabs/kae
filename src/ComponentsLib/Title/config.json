@@ -7,7 +7,7 @@
       "label": "Project details Title",
       "required": true
     },
-    "subtitle": {
+    "subTitle": {
       "type": "string",
       "label": "Project subtitle",
       "required": true
