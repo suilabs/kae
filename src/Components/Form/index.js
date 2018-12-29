@@ -1,10 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { SketchPicker } from 'react-color';
 
 import ImageSelector from '../Images/ImageSelector';
 import { simulateEvent } from '../../Core/Utils';
+import Modal from '../Modal/Modal';
 
 import './Form.css';
 
@@ -159,9 +159,7 @@ export class ImageSelectorBox extends React.Component {
       </button>
     </div>,
     this.state.show &&
-    <div className='image-selector-overlay__wrapper' onClick={this.closeOverlay}>
-      <ImageSelector onClick={this.setImage} onClose={this.closeOverlay}/>
-    </div>
+    <ImageSelector onClick={this.setImage} onClose={this.closeOverlay}/>
   ]
 }
 
@@ -180,9 +178,12 @@ ImageSelectorBox.defaultProps = {
 export const RangeInput = ({id, value, config, onChange}) => {
   const tempValue = value !== undefined ? value : config.max;
   return (
-    <div>
-      <label>{config.label}</label>
+    <div className='field field-range--wrapper'>
+      <label htmlFor={id}>
+        {config.label}
+      </label>
       <button
+        className='field-range__input-add'
         onClick={() => onChange(simulateEvent(id, Math.min(tempValue + config.step, config.max )))}
       >
         +
@@ -190,6 +191,7 @@ export const RangeInput = ({id, value, config, onChange}) => {
       <input className='field-range__input' id={id} type='text' name={id} value={tempValue} onChange={onChange}/>
       <span>%</span>
       <button
+        className='field-range__input-remove'
         onClick={() => onChange(simulateEvent(id, Math.max(tempValue - config.step, config.min )))}
       >
         -
@@ -230,47 +232,41 @@ export class ColorInput extends React.Component {
     console.log(top, left);
     const currentColor = value;
     return [
-      <div className=" field field-color--wrapper">
-        <label>
+      <div className="field field-color--wrapper">
+        <label htmlFor={id}>
           {name}
-          <input id={id} name={id} value={currentColor} onChange={onChange}/>
         </label>
+        <input id={id} name={id} value={currentColor} onChange={onChange}/>
         <div
           className="field-color__display"
           style={{ backgroundColor: currentColor }}
         >
           <button
-            onClick={(event) => {
-              console.log(event.clientX, event.clientY);
-              console.log(event.pageX, event.pageY);
+            onClick={() => {
               this.setState({
-                showColorPicker: !this.state.showColorPicker,
-                top: `${event.clientY}px`,
-                left: `${event.clientX}px`,
+                showColorPicker: true,
               })
             }}
+            className='field-color__display-button'
           >
-            {
-              showColorPicker ? 'Close color picker' : 'Open Color Picker'
-            }
+            Choose
           </button>
         </div>
       </div>,
-      showColorPicker && <PickerPortal>
-        <div
-          style={{
-            top: top,
-            left: left,
-          }}
-          className="field-color__picker--wrapper"
-        >
-          <SketchPicker
-            className="field-color__picker"
-            color={value}
-            onChangeComplete={this.handleChangeComplete}
-          />
-        </div>
-      </PickerPortal>
+      showColorPicker &&
+      <Modal
+        onClose={() => {
+          this.setState({
+            showColorPicker: false,
+          })
+        }}
+      >
+        <SketchPicker
+          className="field-color__picker"
+          color={value}
+          onChangeComplete={this.handleChangeComplete}
+        />
+      </Modal>
     ];
   }
 }
@@ -279,11 +275,4 @@ ColorInput.propTypes = {
   id: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   default: PropTypes.string.isRequired,
-};
-
-const PickerPortal = (props) => {
-  return ReactDOM.createPortal(
-    props.children,
-    document.body,
-  );
 };

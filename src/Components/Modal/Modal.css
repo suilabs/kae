@@ -1,0 +1,27 @@
+.modal--wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 1;
+}
+
+.modal__button-close {
+    padding: .3rem 1rem;
+    border: 0;
+    border-radius: 3px;
+    background-color: #8b034f;
+    position: absolute;
+    right: 0;
+    color: white;
+    z-index: 2;
+    transform: translateX(100%);
+}
+
+body.modal-open {
+    overflow-y: hidden;
+}
+
+body.modal-open #root .kae-container {
+    filter: blur(5px);
+}

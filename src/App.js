@@ -67,7 +67,10 @@ const menu = () => [
 
 class App extends Component {
   render() {
-    return (
+    return [
+      <div id='modal-container'
+         onClick={(e) => e.preventDefault()}
+      />,
       <div className="kae-container">
         <BrowserRouter>
           <ApolloProvider client={client}>
@@ -85,7 +88,7 @@ class App extends Component {
           </ApolloProvider>
       </BrowserRouter>
       </div>
-    );
+    ];
   }
 }
 

@@ -8,7 +8,9 @@
 
   border-left: 1px solid grey;
   border-right: 1px solid grey;
-  box-shadow: 0px 0px 5px grey ;
+  box-shadow: 0 0 5px grey ;
+
+  transition: filter .3s;
 }
 
 html, body, #root {
@@ -103,4 +105,21 @@ svg {
 
 .delete-action:hover {
   background-color: #82373e;
+}
+
+#modal-container:not(:empty) {
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  z-index: 1;
+}
+
+/*default button*/
+button:not([class]) {
+  padding: .3rem 1rem;
+  margin: 1px;
+  border: 0;
+  border-radius: 3px;
+  background-color: #ab9f84;
+  color: white;
 }

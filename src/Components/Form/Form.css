@@ -1,3 +1,11 @@
+/*
+ * Copyright (c) 2018. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
+
 
 .field label {
     display: block;
@@ -34,8 +42,21 @@
 }
 
 .field-range__input {
-    width: 3rem;
-    /*margin: 0 1rem;*/
+    max-width: 3rem;
+}
+
+.field-range__input-add,
+.field-range__input-remove {
+    width: 2rem;
+    padding: 0;
+}
+
+.field-range__input-add {
+    margin-right: 1rem;
+}
+
+.field-range__input-remove {
+    margin-left: 1rem;
 }
 
 .field {
@@ -77,6 +98,14 @@ textarea {
     flex-direction: row;
 }
 
+.field-color--wrapper input {
+    display: none;
+}
+
+.field-color--wrapper label {
+    flex-grow: 1;
+}
+
 .field-color__display {
     flex-grow: 1;
     position: relative;
@@ -91,10 +120,6 @@ textarea {
     mix-blend-mode: difference;
     color: white;
     background-color: transparent;
-}
-
-.field-color__picker--wrapper {
-    position: absolute;
 }
 
 .field-color__picker {

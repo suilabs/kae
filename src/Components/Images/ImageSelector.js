@@ -2,48 +2,64 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {withImages} from "../GraphQL/index";
+import Modal from '../Modal/Modal';
 
 import './ImageSelector.css';
 
 const ImageListItem = ({className, image, onClick}) => (
   <button className={`cover-button ${className}`} onClick={() => onClick(image)}>
     <img src={image.url} alt="list item"/>
+    <p>{image.name}</p>
   </button>
 );
 
-const ImageSelector = ({data: {images}, onClick, onClose}) => {
-  return (
-    <div className="image-selector__wrapper">
-      <div className="image-selector__title">
-        <h1>Image Selector</h1>
-        <button onClick={onClose}>X</button>
-      </div>
-      <div className="image-selector__list">
-        {images.map(image =>
-          <ImageListItem
-            className="image-selector__item"
-            key={image.id}
-            image={image}
-            onClick={onClick}
-          />
-        )}
-      </div>
-    </div>
-  )
-};
+class ImageSelector extends React.Component {
+  render () {
+    const { data: {images}, onClick, onClose } = this.props;
+    return (
+      <Modal
+        onClose={onClose}
+      >
+        <div className="image-selector__title">
+          <h1>Choose and Image</h1>
+        </div>
+        <div className="image-selector__list">
+          {images.map(image =>
+            <ImageListItem
+              className="image-selector__item"
+              key={image.id}
+              image={image}
+              onClick={onClick}
+            />
+          )}
+        </div>
+      </Modal>
+    );
+  }
+}
+
+const imageShape = PropTypes.arrayOf(
+  PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired
+  })
+);
 
 ImageSelector.propTypes = {
-  images: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired
-    })
-  )
+  data: PropTypes.shape({
+    images: imageShape,
+  }),
+  onClick: PropTypes.func,
+  onClose: PropTypes.func,
 };
 
 ImageSelector.defaultProps = {
-  images: []
+  data: {
+    images: [],
+  },
+  onClick: () => {},
+  onClose: () => {},
 };
 
 export default withImages(ImageSelector);
