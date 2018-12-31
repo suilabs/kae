@@ -10,6 +10,8 @@
 
 .image-selector__list {
     display: flex;
+    max-height: 100vh;
+    overflow-y: scroll;
     justify-content: space-around;
     align-content: flex-start;
     flex-wrap: wrap;
