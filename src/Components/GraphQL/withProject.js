@@ -24,6 +24,7 @@ export const PROJECT_QUERY = gql`
               componentId
               propsJson
             }
+            languages
         }
     }
 `;

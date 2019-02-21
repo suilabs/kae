@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { simulateEvent } from '../../Core/Utils';
 
 import {withProjectTypes, withSections} from '../GraphQL';
 import {FieldsSection, SelectInput, InputField, ButtonRow, ButtonRowTypes, ImageSelectorBox} from '../Form/index';
@@ -11,6 +12,41 @@ const ProjectTypesSelector = withProjectTypes(({ data: { projectTypes }, value, 
 const SectionsSelector = withSections(({ data: { sections }, value, onChange }) => (
   <SelectInput options={sections} name="Section" onChange={onChange} value={value} />
 ));
+
+const supportedLanguages = ['ca', 'es', 'en'];
+
+const LanguageSelector = ({ onChange, value = [] }) => {
+  const switchLanguage = (langArray, lang) => {
+    const [ ...retArray ] = langArray;
+    const index = retArray.indexOf(lang);
+    if (index !== -1) {
+      retArray.splice(index, index + 1);
+    } else {
+      retArray.push(lang);
+    }
+    return retArray;
+  };
+
+  return (
+    <FieldsSection name="Languages">
+      {
+        supportedLanguages.map((lang) => (
+          <div>
+            {lang}
+            <input
+              type="checkbox"
+              value={lang}
+              onChange={() =>
+                onChange(simulateEvent('languages', switchLanguage(value, lang)))
+              }
+              checked={value.indexOf(lang) !== -1}
+            />
+          </div>
+        ))
+      }
+    </FieldsSection>
+  )
+};
 
 class ProjectDetailsForm extends React.Component {
   constructor(props) {
@@ -24,6 +60,7 @@ class ProjectDetailsForm extends React.Component {
       cover: project.cover,
       type: project.type,
       section: project.section,
+      languages: project.languages,
       contentHasChanged: false,
       newProject: !Object.keys(project).length,
       whatsChanged: [],
@@ -101,6 +138,7 @@ class ProjectDetailsForm extends React.Component {
       section,
       contentHasChanged,
       newProject,
+      languages
     } = this.state;
     let coverUrl, typeId, sectionId;
     if (cover) {
@@ -130,6 +168,7 @@ class ProjectDetailsForm extends React.Component {
           <FieldsSection name="Classification">
             <ProjectTypesSelector onChange={this.onChange} value={typeId} />
             <SectionsSelector onChange={this.onChange} value={sectionId} />
+            <LanguageSelector onChange={this.onChange} value={languages} />
           </FieldsSection>
         </div>
         <ButtonRow
