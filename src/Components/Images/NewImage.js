@@ -6,9 +6,11 @@ import ImageDetailsForm from './ImageDetailsForm';
 import bus from '../../Core/bus';
 
 class NewImage extends React.Component {
-  createImage = (mutation) => (image) => {
-    if (image) {
-      mutation({ variables: image });
+  createImage = (mutation) => ({name, s3: { url, name: filename }}) => {
+    if (name && url && filename) {
+      mutation({ variables: {
+          name, url, filename
+        }});
     }
   };
 

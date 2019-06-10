@@ -14,8 +14,7 @@ const FileUpload = {
       headers,
     };
     return fetch(FileUpload.url, fetchConf)
-      .then(resp => resp.json())
-      .then(obj => obj.url);
+      .then(resp => resp.json());
   }
 };
 
