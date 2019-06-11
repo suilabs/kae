@@ -137,7 +137,9 @@ export class ImageSelectorBox extends React.Component {
   }
 
   setImage = (image) => {
-    this.props.onChange(simulateEvent(this.props.id, image));
+    this.setState({
+      show: false,
+    }, () => this.props.onChange(simulateEvent(this.props.id, image)));
   };
 
   showOverlay = () => {

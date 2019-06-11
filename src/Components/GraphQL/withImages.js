@@ -32,6 +32,7 @@ const withImageQuery = gql`
             id
             name
             url
+            filename
         }
     }
 `;
@@ -44,6 +45,7 @@ export default withQuery(gql`
             id
             name
             url
+            filename
         }
     }
 `);

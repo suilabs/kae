@@ -9,8 +9,6 @@
   border-left: 1px solid grey;
   border-right: 1px solid grey;
   box-shadow: 0 0 5px grey ;
-
-  transition: filter .3s;
 }
 
 html, body, #root {
