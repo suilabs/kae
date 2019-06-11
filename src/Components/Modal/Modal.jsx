@@ -15,7 +15,7 @@ class Modal extends Component {
 
   componentWillUnmount() {
     document.body.classList.remove('modal-open');
-    const kaeContainer = document.getElementsByClassName('kae-container')[0]
+    const kaeContainer = document.getElementsByClassName('kae-container')[0];
     kaeContainer.removeEventListener('click', preventEverything);
   }
 
