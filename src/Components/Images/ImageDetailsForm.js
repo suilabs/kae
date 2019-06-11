@@ -12,7 +12,10 @@ class ImageDetailsForm extends React.Component {
 
     this.state = {
       name: props.name,
-      url: props.url,
+      s3: {
+        url: props.url,
+        name: props.filename,
+      },
       file: null,
       uploading: false,
       contentHasChanged: false,
@@ -31,12 +34,13 @@ class ImageDetailsForm extends React.Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const {name, url, contentHasChanged} = this.state;
+    const {name, s3, contentHasChanged} = this.state;
     if (!contentHasChanged) {
       this.props.onSubmit({});
     }
+    debugger;
     this.props.onSubmit({
-      name, url
+      name, s3
     });
   };
 
@@ -45,9 +49,13 @@ class ImageDetailsForm extends React.Component {
       uploading: true,
     });
     return FileUpload.upload(target.files[0])
-      .then((url) => {
+      .then((file) => {
         this.setState({
-          url,
+          s3: {
+            url: file.url,
+            name: file.name,
+          },
+          name: !this.state.name ? file.name : null,
           uploading: false,
           contentHasChanged: true,
         });
@@ -63,19 +71,19 @@ class ImageDetailsForm extends React.Component {
   };
 
   render() {
-    const { name, url, file , uploading, newImage, contentHasChanged } = this.state;
+    const { name, s3, file , uploading, newImage, contentHasChanged } = this.state;
     return (
       <div>
         <FieldsSection name="Image Details">
           <div className="image-form__wrapper">
             <div className="image-form__thumbnail">
-              <Thumbnail name={name} url={url}/>
+              <Thumbnail name={name} url={s3.url}/>
             </div>
             {
               (uploading && 'Uploading Image') ||
               <FileField name='File' value={file && file.name} onChange={this.handleFileUpload} />
             }
-            <InputField name='Name' value={name} onChange={this.onChange} />
+            <InputField name='Name' value={name || s3.name} onChange={this.onChange} />
           </div>
         </FieldsSection>
         <ButtonRow

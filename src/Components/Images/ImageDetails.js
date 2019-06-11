@@ -33,13 +33,15 @@ class ImageDetails extends React.Component {
     bus.publish('error', `Error when trying to ${operation} ${message}`);
   };
 
-  onUpdate = (mutation) => ({name, url}) => {
-    if (!url) {
+  onUpdate = (mutation) => ({name, s3}) => {
+    if (!s3.url) {
       return;
     }
     const image = {
       id: this.props.data.image.id,
-      name, url,
+      name,
+      url: s3.url,
+      filename: s3.name,
     };
     mutation({
       variables: image
