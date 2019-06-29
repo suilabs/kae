@@ -48,6 +48,11 @@ const LanguageSelector = ({ onChange, value = [] }) => {
   )
 };
 
+const ProjectStatus = {
+  PUBLISHED: 'PUBLISHED',
+  DRAFT: 'DRAFT',
+};
+
 class ProjectDetailsForm extends React.Component {
   constructor(props) {
     super(props);
@@ -56,6 +61,7 @@ class ProjectDetailsForm extends React.Component {
     this.state = {
       url: project.url,
       name: project.name,
+      status: project.status,
       description: project.description,
       cover: project.cover,
       type: project.type,
@@ -128,10 +134,21 @@ class ProjectDetailsForm extends React.Component {
     }
   };
 
+  onSwitchPublishState = (e) => {
+    e.preventDefault();
+    console.log("STATUS", this.state.status);
+    if (this.state.status === ProjectStatus.PUBLISHED) {
+      this.props.onUnpublish();
+    } else {
+      this.props.onPublish();
+    }
+  };
+
   render() {
     const {
       url,
       name,
+      status,
       description,
       cover,
       type,
@@ -178,6 +195,13 @@ class ProjectDetailsForm extends React.Component {
           deleteText="Delete"
           type={newProject && contentHasChanged ? ButtonRowTypes.CREATE : buttonType}
         />
+        {!newProject &&
+          <ButtonRow
+            submitText={status === ProjectStatus.PUBLISHED ? 'Unpublish' : 'Publish'}
+            onSubmit={this.onSwitchPublishState}
+            type={ButtonRowTypes.UPDATE}
+          />
+        }
       </div>
     );
   };
@@ -185,12 +209,18 @@ class ProjectDetailsForm extends React.Component {
 
 ProjectDetailsForm.propTypes = {
   data: PropTypes.object,
+  onSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onPublish: PropTypes.func,
+  onUnpublish: PropTypes.func,
 };
 
 ProjectDetailsForm.defaultProps = {
   data: {
     project: {}
-  }
+  },
+  onPublish: () => {},
+  onUnpublish: () => {},
 };
 
 export default ProjectDetailsForm;

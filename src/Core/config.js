@@ -1,6 +1,6 @@
 export default {
   GRAPHQL: {
-    host: 'suilabs.com',
+    host: 'localhost',
     port: 4000,
     service: 'v2.hathsin',
     path: 'graphql',

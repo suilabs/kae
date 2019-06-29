@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { withProjects } from './GraphQL';
+import StatusIcon from './Icons/status';
 import Thumbnail from './Thumbnail';
 
 import './ProjectsList.css';
 
-const ProjectListItem = ({project: {id, url: destUrl, name, cover: {url}}}) => {
+const ProjectListItem = ({project: {id, url: destUrl, name, status, cover: {url}}}) => {
   return (
     <Link
       to={destUrl || `/project/id/${id}`}
@@ -16,6 +17,7 @@ const ProjectListItem = ({project: {id, url: destUrl, name, cover: {url}}}) => {
       <Thumbnail
         name={name}
         url={url}
+        status={status}
       />
     </Link>
   );
