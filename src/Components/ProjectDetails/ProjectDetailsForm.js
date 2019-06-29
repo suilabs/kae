@@ -136,7 +136,6 @@ class ProjectDetailsForm extends React.Component {
 
   onSwitchPublishState = (e) => {
     e.preventDefault();
-    console.log("STATUS", this.state.status);
     if (this.state.status === ProjectStatus.PUBLISHED) {
       this.props.onUnpublish();
     } else {

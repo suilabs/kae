@@ -35,7 +35,6 @@ const FieldFactory = {
                 onChange={onChange}
               />;
             case 'color':
-              console.log(value);
               return <ColorInput
                 id={key}
                 name={value.label}

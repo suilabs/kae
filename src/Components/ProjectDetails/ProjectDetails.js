@@ -103,7 +103,7 @@ class ProjectDetails extends React.Component {
           this.redirect(updateProject.id);
           bus.publish('success', `Project ${updateProject.name} updated`);
         }}
-        onError={(err) => console.log(err)}
+        onError={(err) => console.error(err)}
       >
         { (updateProject) => {
             return (

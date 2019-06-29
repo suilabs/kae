@@ -48,7 +48,7 @@ class ProjectDetails extends React.Component {
           this.props.history.push(`/project/id/${insertProject.id}/template`, insertProject);
           bus.publish('success', `Project ${insertProject.name} created`);
         }}
-        onError={(err) => console.log(err)}
+        onError={(err) => console.error(err)}
       >
         { (insertProject) =>
           <ProjectDetailsForm
