@@ -231,7 +231,6 @@ export class ColorInput extends React.Component {
   render() {
     const { id, name, value, onChange } = this.props;
     const { showColorPicker, top, left } = this.state;
-    console.log(top, left);
     const currentColor = value;
     return [
       <div className="field field-color--wrapper">

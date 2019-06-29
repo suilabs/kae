@@ -30,6 +30,8 @@ const DELETE_MUTATION = gql`
 `;
 
 class ProjectDetails extends React.Component {
+  switchPublishState = false;
+
   onSubmit = (mutation) => (project) => {
     if (!project) {
       this.redirect(this.props.data.project.id);
@@ -38,6 +40,7 @@ class ProjectDetails extends React.Component {
     const data = {
       url: project.url,
       name: project.name,
+      status: project.status,
       description: project.description,
       cover: project.cover.id,
       type: project.type.id,
@@ -52,16 +55,44 @@ class ProjectDetails extends React.Component {
     })
   };
 
-  deleteProject = (mutation, id) => () => {
+  onPublish = (mutation) => () => {
+    this.switchPublishState = true;
     mutation({
       variables: {
-        ids: [id],
+        id: this.props.data.project.id,
+        project: {
+          status: 'PUBLISHED'
+        }
+      }
+    });
+  };
+
+  onUnPublish = (mutation) => () => {
+    this.switchPublishState = true;
+    mutation({
+      variables: {
+        id: this.props.data.project.id,
+        project: {
+          status: 'DRAFT'
+        }
+      }
+    });
+  };
+
+  deleteProject = (mutation) => () => {
+    mutation({
+      variables: {
+        ids: [this.props.data.project.id],
       },
     });
   };
 
   redirect = (id) => {
-    this.props.history.push(`/project/id/${id}/template`);
+    if (this.switchPublishState) {
+      this.props.history.push('/projects');
+    } else {
+      this.props.history.push(`/project/id/${id}/template`);
+    }
   };
 
   render() {
@@ -72,7 +103,7 @@ class ProjectDetails extends React.Component {
           this.redirect(updateProject.id);
           bus.publish('success', `Project ${updateProject.name} updated`);
         }}
-        onError={(err) => console.log(err)}
+        onError={(err) => console.error(err)}
       >
         { (updateProject) => {
             return (
@@ -87,7 +118,9 @@ class ProjectDetails extends React.Component {
                   <ProjectDetailsForm
                     {...this.props}
                     onSubmit={this.onSubmit(updateProject)}
-                    onDelete={this.deleteProject(deleteProjects, this.props.data.project.id)}
+                    onPublish={this.onPublish(updateProject)}
+                    onUnpublish={this.onUnPublish(updateProject)}
+                    onDelete={this.deleteProject(deleteProjects)}
                   />
                 }
               </Mutation>

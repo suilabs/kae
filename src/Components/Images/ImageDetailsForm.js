@@ -27,7 +27,7 @@ class ImageDetailsForm extends React.Component {
     const targetName = target.name.toLowerCase();
     this.setState({
       [targetName]: target.value,
-      contentHasChanged: !!this.state.url,
+      contentHasChanged: !!this.state.s3.url,
     });
   };
 
@@ -38,7 +38,6 @@ class ImageDetailsForm extends React.Component {
     if (!contentHasChanged) {
       this.props.onSubmit({});
     }
-    debugger;
     this.props.onSubmit({
       name, s3
     });

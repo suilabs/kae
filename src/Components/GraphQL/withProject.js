@@ -7,6 +7,7 @@ export const PROJECT_QUERY = gql`
             id
             url
             name
+            status
             cover {
                 name
                 url

@@ -143,7 +143,6 @@ class ProjectData extends React.Component {
         marginTop: `${animate[index].diferentialTop}px`,
         marginBottom: `${animate[index].diferentialBottom}px`,
       };
-      console.log(style);
       return (
         <div
           className='sui-template__component'

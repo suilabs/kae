@@ -11,7 +11,7 @@ const withQuery = (query) => (Component) => (props) => {
         const {loading, error, data} = pp;
         if (loading) return <p className="loading">loading<span>.</span><span>.</span><span>.</span></p>;
         if (error) {
-          console.log(error);
+          console.error(error);
           return <p> error </p>;
         }
         return <Component data={data} {...props} />

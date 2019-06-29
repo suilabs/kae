@@ -3,9 +3,10 @@ import withQuery from "./withQuery";
 
 export const PROJECTS_QUERY = gql`
     {
-        projects {
+        projects: draftProjects {
             id
             name
+            status
             cover {
                 name
                 url
