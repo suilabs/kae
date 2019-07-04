@@ -3,6 +3,7 @@ services:
   hathsin:
     build: .
     container_name: kae
+    restart: always
 
 networks:
   default:
