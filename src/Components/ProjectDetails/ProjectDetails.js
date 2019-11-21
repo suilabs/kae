@@ -45,6 +45,7 @@ class ProjectDetails extends React.Component {
       cover: project.cover.id,
       type: project.type.id,
       section: project.section.id,
+      languages: project.languages,
     };
 
     mutation({
