@@ -21,6 +21,8 @@ workflows:
   deploy:
     jobs:
       - release:
+          context:
+            - s3_assets
           filters:
             branches:
               only: primary
