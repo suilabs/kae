@@ -36,7 +36,7 @@ const HeroImage = props => (
     className="sui-component-heroImage__wrapper"
     style={
       {
-        backgroundImage: `url(${props.image})`,
+        backgroundImage: `url(${props.image.url})`,
         minHeight: props.height,
       }
     }
@@ -52,14 +52,14 @@ const HeroImage = props => (
           color: props.titleColor,
         }}
       >
-        {props.projectTitle}
+        {props.title}
       </h1>
       <p
         style={{
           color: props.subTitleColor,
         }}
       >
-        {props.projectDescription}
+        {props.subTitle}
       </p>
     </div>
   </div>
@@ -67,17 +67,19 @@ const HeroImage = props => (
 
 HeroImage.id = HeroImageConfig.id;
 HeroImage.propTypes = {
-  image: PropTypes.string.isRequired,
+  image: PropTypes.shape({
+    url: PropTypes.string,
+  }).isRequired,
   height: PropTypes.string,
   titleColor: PropTypes.string,
   subTitleColor: PropTypes.string,
-  projectTitle: PropTypes.string,
-  projectDescription: PropTypes.string,
+  title: PropTypes.string,
+  subTitle: PropTypes.string,
 };
 
 HeroImage.defaultProps = {
-  projectTitle: '',
-  projectDescription: '',
+  title: '',
+  subTitle: '',
   height: '7rem',
   titleColor: '#000',
   subTitleColor: '#000',

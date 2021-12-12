@@ -1,0 +1,11 @@
+{
+  "id": "stickyText",
+  "displayName": "Sticky Text",
+  "config": {
+    "text": {
+      "type": "string",
+      "label": "Overall Text",
+      "required": true
+    }
+  }
+}

@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { TagConfig, HeroImageConfig, ImageConfig, ParagraphConfig, TitleConfig } from '../../ComponentsLib';
+import { TagConfig, HeroImageConfig, ImageConfig, ParagraphConfig, TitleConfig, StickyTextConfig  } from '../../ComponentsLib';
 import { InputField, ImageSelectorBox, LongInputField, RangeInput, ColorInput } from '../Form';
 
 import './FieldFactory.css';
 
-export const components = [HeroImageConfig, TagConfig, ImageConfig, ParagraphConfig, TitleConfig];
+export const components = [HeroImageConfig, TagConfig, ImageConfig, ParagraphConfig, TitleConfig, StickyTextConfig];
 
 const FieldFactory = {
   renderField(componentId, props, onChange) {

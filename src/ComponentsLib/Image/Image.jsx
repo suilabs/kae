@@ -13,7 +13,7 @@ const Image = props => (
       }}
   >
     <img
-      src={props.image}
+      src={props.image.url}
       alt={props.alt}
     />
   </div>
@@ -21,7 +21,9 @@ const Image = props => (
 
 Image.id = Config.id;
 Image.propTypes = {
-  image: PropTypes.string.isRequired,
+  image: PropTypes.shape({
+    url: PropTypes.string,
+  }).isRequired,
   alt: PropTypes.string.isRequired,
   width: PropTypes.number,
 };

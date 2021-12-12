@@ -8,4 +8,5 @@ export { default as SuiImage } from './Image/Image';
 export { default as ImageConfig } from './Image/config';
 export { default as SuiTitle } from './Title/Title';
 export { default as TitleConfig } from './Title/config';
-
+export { default as StickyText } from './StickyText/StickyText';
+export { default as StickyTextConfig } from './StickyText/config';

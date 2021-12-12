@@ -12,7 +12,7 @@
       "label": "Alternative text",
       "required": true
     },
-    "width": {
+    "widht": {
       "type": "range",
       "min": 0,
       "max": 100,

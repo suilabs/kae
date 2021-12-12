@@ -19,12 +19,14 @@ const Tags = (props) => {
       {
         tags.map(
           t =>
-            (<span
-              style={props.style}
-              className="sui-component-tags__item"
-            >
-              {t}
-             </span>),
+            (
+              <span
+                style={props.style}
+                className="sui-component-tags__item"
+              >
+                {t}
+              </span>
+            ),
         )
       }
     </div>
