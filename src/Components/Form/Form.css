@@ -125,3 +125,7 @@ textarea {
 .field-color__picker {
     position: relative;
 }
+
+.field-flex-group {
+    display: flex;
+}

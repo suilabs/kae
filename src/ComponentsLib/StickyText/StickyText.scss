@@ -3,6 +3,12 @@
   bottom: 0;
   left: 0;
   z-index: 234567890;
+  width: 100%;
   padding: 1rem;
-  font-size: smaller;
+  background: white;
+  font-size: .8rem;
+
+  @media only screen and (min-width: 64rem) {
+    position: inherit;
+  }
 }

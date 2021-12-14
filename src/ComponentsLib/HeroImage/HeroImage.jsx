@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import HeroImageConfig from './config';
+import HeroImageConfig from './config.json';
 
 import './HeroImage.css';
 
@@ -23,23 +23,20 @@ function invertColor(inHex, bw) {
 
   if (bw) {
     // http://stackoverflow.com/a/3943023/112731
-    const color = ((r * 0.299) + (g * 0.587) + (b * 0.114)) > 186
-      ? '#000000'
-      : '#FFFFFF';
+    const color =
+      r * 0.299 + g * 0.587 + b * 0.114 > 186 ? '#000000' : '#FFFFFF';
     return invertColor(color);
   }
   return `rgba(${r}, ${g}, ${b}, 0.4)`;
 }
 
-const HeroImage = props => (
+const HeroImage = (props) => (
   <div
     className="sui-component-heroImage__wrapper"
-    style={
-      {
-        backgroundImage: `url(${props.image.url})`,
-        minHeight: props.height,
-      }
-    }
+    style={{
+      backgroundImage: `url(${props.image.url})`,
+      minHeight: props.height,
+    }}
   >
     <div
       className="sui-component-heroImage__title"

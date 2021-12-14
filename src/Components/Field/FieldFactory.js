@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { TagConfig, HeroImageConfig, ImageConfig, ParagraphConfig, TitleConfig, StickyTextConfig  } from '../../ComponentsLib';
-import { InputField, ImageSelectorBox, LongInputField, RangeInput, ColorInput } from '../Form';
+import { TagConfig, HeroImageConfig, ImageConfig, ParagraphConfig, TitleConfig, StickyTextConfig, CarrouselConfig } from '../../ComponentsLib';
+import { InputField, ImageSelectorBox, LongInputField, RangeInput, ColorInput, ImageGroupSelector } from '../Form';
 
 import './FieldFactory.css';
 
-export const components = [HeroImageConfig, TagConfig, ImageConfig, ParagraphConfig, TitleConfig, StickyTextConfig];
+export const components = [HeroImageConfig, TagConfig, ImageConfig, ParagraphConfig, TitleConfig, StickyTextConfig, CarrouselConfig];
+
 
 const FieldFactory = {
   renderField(componentId, props, onChange) {
@@ -23,6 +24,8 @@ const FieldFactory = {
               return <InputField id={key} name={value.label} onChange={onChange} value={props[key]} />;
             case 'image':
               return <ImageSelectorBox className='sui-template-component__field' id={key} src={(props[key] || {}).url} onChange={onChange} />;
+            case 'image-group':
+              return <ImageGroupSelector className="sui-template-component__field" id={key} images={(props[key] || [])} onChange={onChange} />;
             case 'tags':
               return <InputField id={key} name={value.label} onChange={onChange} value={props[key]} />;
             case 'paragraph':

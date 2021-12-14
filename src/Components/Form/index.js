@@ -177,6 +177,39 @@ ImageSelectorBox.defaultProps = {
   src: 'https://e-fisiomedic.com/wp-content/uploads/2013/11/default-placeholder-300x300.png'
 };
 
+export const ImageGroupSelector = ({images, onChange, id, className}) => {
+  const onSingleImageChange = (({target: { name, value: modifiedImage }}) => {
+    let newImages = images.map((image) => image.id !== name ? image : modifiedImage)
+    if (!name) {
+      newImages.push(modifiedImage)
+    }
+    onChange(simulateEvent(id, newImages))
+  })
+
+  return (
+    <div className="field field-flex-group">
+      {images.map(({url, id}) => <ImageSelectorBox key={id} id={id} src={url} onChange={onSingleImageChange}/>)}
+      <ImageSelectorBox src={null} onChange={onSingleImageChange} />
+    </div>
+  )
+
+}
+
+ImageGroupSelector.propTypes = {
+  images: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+  }),
+  onChange: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  className: PropTypes.string,
+}
+
+ImageGroupSelector.defaultProps = {
+  className: '',
+  images: [],
+}
+
 export const RangeInput = ({id, value, config, onChange}) => {
   const tempValue = value !== undefined ? value : config.max;
   return (

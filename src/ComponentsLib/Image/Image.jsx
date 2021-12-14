@@ -1,21 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Config from './config';
+import Config from './config.json';
 
 import './Image.css';
 
-const Image = props => (
+const Image = (props) => (
   <div
     className="sui-component-image__wrapper"
     style={{
-        width: `${props.width}%`,
-      }}
+      width: `${props.width}%`,
+    }}
   >
-    <img
-      src={props.image.url}
-      alt={props.alt}
-    />
+    <img src={props.image.url} alt={props.alt} />
   </div>
 );
 
@@ -29,6 +26,7 @@ Image.propTypes = {
 };
 
 Image.defaultProps = {
+  // eslint-disable-next-line backpack/use-tokens
   width: 100,
 };
 

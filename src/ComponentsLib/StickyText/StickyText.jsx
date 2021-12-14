@@ -5,13 +5,9 @@ import Config from './config.json';
 
 import './StickyText.scss';
 
-const StickyText = props => (
-  <div
-    className="sui-component-sticky-text__wrapper"
-  >
-    <p>
-      {props.text}
-    </p>
+const StickyText = (props) => (
+  <div className="sui-component-sticky-text__wrapper">
+    <p>{props.text}</p>
   </div>
 );
 
