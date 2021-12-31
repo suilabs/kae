@@ -1,0 +1,11 @@
+{
+  "id": "carrousel",
+  "displayName": "Carrousel",
+  "config": {
+    "images": {
+      "type": "image-group",
+      "label": "Images",
+      "require": true
+    }
+  }
+}
