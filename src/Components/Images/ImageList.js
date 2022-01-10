@@ -30,7 +30,7 @@ const ImageList = ({data: {images}}) => {
     <div>
       <h1>Image list</h1>
       <div className={'.list'}>
-        {[...images, newImage].map(image =>
+        {[newImage, ...images].map(image =>
           <ImageListItem key={image.id} image={image} />
         )}
       </div>

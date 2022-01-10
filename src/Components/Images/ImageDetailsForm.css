@@ -1,6 +1,10 @@
 .image-form__wrapper {
     display: flex;
-    justify-content: space-evenly;
-
+    align-items: center;
+    flex-direction: column;
     margin: 1rem .5rem;
+}
+
+.image-form__thumbnail {
+    cursor: pointer;
 }

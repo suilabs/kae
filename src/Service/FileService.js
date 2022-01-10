@@ -1,6 +1,6 @@
 import { getServiceUrl } from '../Core/Utils';
 
-const FileUpload = {
+const FileService = {
   url: getServiceUrl('statics'),
   upload: async (file) => {
     const headers = new Headers({
@@ -13,9 +13,9 @@ const FileUpload = {
       body: form,
       headers,
     };
-    return fetch(FileUpload.url, fetchConf)
+    return fetch(FileService.url, fetchConf)
       .then(resp => resp.json());
-  }
+  },
 };
 
-export default FileUpload;
+export default FileService;

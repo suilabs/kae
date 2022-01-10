@@ -1,10 +1,11 @@
 import React from 'react';
-import FileUpload from '../../Service/FileUpload';
+import FileService from '../../Service/FileUpload';
 
 import {InputField, FieldsSection, FileField, ButtonRow, ButtonRowTypes} from '../Form';
 import Thumbnail from '../Thumbnail';
 
 import './ImageDetailsForm.css';
+import Loading from '../Loading/Loading';
 
 class ImageDetailsForm extends React.Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class ImageDetailsForm extends React.Component {
     this.setState({
       uploading: true,
     });
-    return FileUpload.upload(target.files[0])
+    return FileService.upload(target.files[0])
       .then((file) => {
         this.setState({
           s3: {
@@ -61,6 +62,10 @@ class ImageDetailsForm extends React.Component {
       });
   };
 
+  setRef = (ref) => {
+    this.inputRef = ref;
+  }
+
   onDelete = (e) => {
     e.preventDefault();
 
@@ -69,18 +74,22 @@ class ImageDetailsForm extends React.Component {
     }
   };
 
+  onThumbnailClick = () => {
+    this.inputRef.click()
+  }
+
   render() {
-    const { name, s3, file , uploading, newImage, contentHasChanged } = this.state;
+    const { name, s3, file, uploading, newImage, contentHasChanged } = this.state;
     return (
       <div>
         <FieldsSection name="Image Details">
           <div className="image-form__wrapper">
             <div className="image-form__thumbnail">
-              <Thumbnail name={name} url={s3.url}/>
+              <Thumbnail name={name} url={s3.url} onClick={this.onThumbnailClick}/>
             </div>
             {
-              (uploading && 'Uploading Image') ||
-              <FileField name='File' value={file && file.name} onChange={this.handleFileUpload} />
+              (uploading && <Loading />) ||
+              <FileField setRef={this.setRef} name='File' value={file && file.name} onChange={this.handleFileUpload} />
             }
             <InputField name='Name' value={name || s3.name} onChange={this.onChange} />
           </div>

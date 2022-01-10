@@ -5,14 +5,16 @@ import Blur from './blur';
 import './Thumbnail.css';
 import StatusIcon from './Icons/status';
 
-export default ({name, url, status}) => {
+export default ({name, url, status, onClick}) => {
   const backgroundStyle = {
-    backgroundImage: `url(${url})`,
+    backgroundImage: `url(${url || '/images/imagePlaceholder.png'})`,
   };
   return (
     <span
       className='card'
       style={backgroundStyle}
+      role="button"
+      onClick={onClick}
     >
       {url &&
         [
