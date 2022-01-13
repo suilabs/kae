@@ -161,7 +161,7 @@ class ProjectDetailsForm extends React.Component {
     } = this.props.data
     let coverUrl, typeId, sectionId;
     if (cover) {
-      coverUrl = cover.url;
+      coverUrl = cover.thumbnailUrl || cover.url;
     } else {
       coverUrl = '/images/imagePlaceholder.png';
     }

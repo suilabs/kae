@@ -6,7 +6,7 @@ export default {
     path: 'graphql',
   },
   STATICS: {
-    host: 'localhost',
+    host: 'suilabs.com',
     port: 3003,
     service: 'tarbean',
     path: 'upload/image/s3',
