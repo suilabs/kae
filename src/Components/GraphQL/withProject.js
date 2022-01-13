@@ -11,6 +11,7 @@ export const PROJECT_QUERY = gql`
             cover {
                 name
                 url
+                thumbnailUrl
             }
             description
             type {

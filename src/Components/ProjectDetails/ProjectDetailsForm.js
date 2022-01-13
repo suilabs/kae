@@ -5,13 +5,13 @@ import { simulateEvent } from '../../Core/Utils';
 import {withProjectTypes, withSections} from '../GraphQL';
 import {FieldsSection, SelectInput, InputField, ButtonRow, ButtonRowTypes, ImageSelectorBox} from '../Form/index';
 
-const ProjectTypesSelector = withProjectTypes(({ data: { projectTypes }, value, onChange }) => (
+const ProjectTypesSelector = ({ projectTypes, value, onChange }) => (
   <SelectInput options={projectTypes} name="Type" onChange={onChange} value={value} />
-));
+);
 
-const SectionsSelector = withSections(({ data: { sections }, value, onChange }) => (
+const SectionsSelector = ({ sections, value, onChange }) => (
   <SelectInput options={sections} name="Section" onChange={onChange} value={value} />
-));
+);
 
 const supportedLanguages = ['ca', 'es', 'en'];
 
@@ -62,11 +62,11 @@ class ProjectDetailsForm extends React.Component {
       url: project.url,
       name: project.name,
       status: project.status,
-      description: project.description,
+      description: '',
       cover: project.cover,
-      type: project.type,
-      section: project.section,
-      languages: project.languages,
+      type: project.type || props.data.projectTypes[0] || null,
+      section: project.section || props.data.sections[0] || null,
+      languages: ['ca', 'es', 'en'],
       contentHasChanged: false,
       newProject: !Object.keys(project).length,
       whatsChanged: [],
@@ -148,7 +148,6 @@ class ProjectDetailsForm extends React.Component {
       url,
       name,
       status,
-      description,
       cover,
       type,
       section,
@@ -156,11 +155,15 @@ class ProjectDetailsForm extends React.Component {
       newProject,
       languages
     } = this.state;
+    const {
+      projectTypes,
+      sections,
+    } = this.props.data
     let coverUrl, typeId, sectionId;
     if (cover) {
       coverUrl = cover.url;
     } else {
-      coverUrl = '/favicon.ico';
+      coverUrl = '/images/imagePlaceholder.png';
     }
     if (type) {
       typeId = type.id
@@ -175,15 +178,14 @@ class ProjectDetailsForm extends React.Component {
         <div className="projectDetails">
           <FieldsSection name="Basic description">
             <InputField name="Name" value={name} onChange={this.onChange} />
-            <InputField name="Description" value={description} onChange={this.onChange}/>
             <InputField name="Url" value={url} onChange={this.onChange}/>
           </FieldsSection>
           <FieldsSection name="Cover">
             <ImageSelectorBox id="cover" src={coverUrl} onChange={this.onChange} />
           </FieldsSection>
-          <FieldsSection name="Classification">
-            <ProjectTypesSelector onChange={this.onChange} value={typeId} />
-            <SectionsSelector onChange={this.onChange} value={sectionId} />
+          <FieldsSection name="Advanced" collapsed>
+            <ProjectTypesSelector onChange={this.onChange} value={typeId} projectTypes={projectTypes}/>
+            <SectionsSelector onChange={this.onChange} value={sectionId} sections={sections} />
             <LanguageSelector onChange={this.onChange} value={languages} />
           </FieldsSection>
         </div>
@@ -216,10 +218,12 @@ ProjectDetailsForm.propTypes = {
 
 ProjectDetailsForm.defaultProps = {
   data: {
-    project: {}
+    project: {},
+    projectTypes: [],
+    sections: [],
   },
   onPublish: () => {},
   onUnpublish: () => {},
 };
 
-export default ProjectDetailsForm;
+export default withSections(withProjectTypes(ProjectDetailsForm));

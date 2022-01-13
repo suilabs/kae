@@ -10,6 +10,7 @@ export const PROJECTS_QUERY = gql`
             cover {
                 name
                 url
+                thumbnailUrl
             }
         }
     }

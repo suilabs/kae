@@ -14,7 +14,7 @@ const withQuery = (query) => (Component) => (props) => {
           console.error(error);
           return <p> error </p>;
         }
-        return <Component data={data} {...props} />
+        return <Component {...props} data={{ ...data, ...props.data }} />
       }}
     </Query>
   );

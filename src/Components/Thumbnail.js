@@ -5,9 +5,13 @@ import Blur from './blur';
 import './Thumbnail.css';
 import StatusIcon from './Icons/status';
 
-export default ({name, url, status, onClick}) => {
+const generateDataString = (data) => {
+  return data ? `data:image/png;base64,${data}` : null
+}
+
+export default ({name, url, data, status, onClick}) => {
   const backgroundStyle = {
-    backgroundImage: `url(${url || '/images/imagePlaceholder.png'})`,
+    backgroundImage: `url(${generateDataString(data) || url ||  '/images/imagePlaceholder.png'})`,
   };
   return (
     <span

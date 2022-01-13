@@ -42,20 +42,29 @@ LongInputField.defaultTypes = {
   value: '',
 };
 
-export const FieldsSection = ({ name, children }) => (
+export const FieldsSection = ({ name, children, collapsed }) => (
   <div className="fields-section">
-    <span className="fields-section__name">{name}</span>
-    {children}
+    <input id={name} className="fields-section__toggle" type="checkbox" defaultChecked={!collapsed}/>
+    <label for={name} className="fields-section__name">
+      {name}
+    </label>
+    <div class="fields-section__collapsible-content">
+      <div class="fields-section__collapsible-inner-content">
+        {children}
+      </div>
+    </div>
   </div>
 );
 
 FieldsSection.propTypes = {
   name: PropTypes.string.isRequired,
+  collapsed: PropTypes.bool,
   children: PropTypes.arrayOf(PropTypes.node),
 };
 
 FieldsSection.defaultProps = {
   children: [],
+  collapsed: false,
 };
 
 export const SelectInput = ({ name, options, value, onChange }) => (

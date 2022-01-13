@@ -1,14 +1,14 @@
 export default {
   GRAPHQL: {
-    host: 'suilabs.com',
+    host: 'localhost',
     port: 4000,
     service: 'v2.hathsin',
     path: 'graphql',
   },
   STATICS: {
-    host: 'suilabs.com',
-    port: 3000,
+    host: 'localhost',
+    port: 3003,
     service: 'tarbean',
-    path: 'upload/s3',
+    path: 'upload/image/s3',
   },
 }

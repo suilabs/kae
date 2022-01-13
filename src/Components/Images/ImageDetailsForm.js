@@ -1,5 +1,5 @@
 import React from 'react';
-import FileService from '../../Service/FileUpload';
+import FileService from '../../Service/FileService';
 
 import {InputField, FieldsSection, FileField, ButtonRow, ButtonRowTypes} from '../Form';
 import Thumbnail from '../Thumbnail';
@@ -13,8 +13,9 @@ class ImageDetailsForm extends React.Component {
 
     this.state = {
       name: props.name,
-      s3: {
+      pic: {
         url: props.url,
+        data: null,
         name: props.filename,
       },
       file: null,
@@ -28,19 +29,19 @@ class ImageDetailsForm extends React.Component {
     const targetName = target.name.toLowerCase();
     this.setState({
       [targetName]: target.value,
-      contentHasChanged: !!this.state.s3.url,
+      contentHasChanged: !!this.state.pic.url,
     });
   };
 
   onSubmit = (e) => {
     e.preventDefault();
 
-    const {name, s3, contentHasChanged} = this.state;
+    const {name, pic, contentHasChanged} = this.state;
     if (!contentHasChanged) {
       this.props.onSubmit({});
     }
     this.props.onSubmit({
-      name, s3
+      name, pic
     });
   };
 
@@ -49,13 +50,15 @@ class ImageDetailsForm extends React.Component {
       uploading: true,
     });
     return FileService.upload(target.files[0])
-      .then((file) => {
+      .then(([ original, thumbnail ]) => {
         this.setState({
-          s3: {
-            url: file.url,
-            name: file.name,
+          pic: {
+            url: original.url,
+            thumbnailUrl: thumbnail.url,
+            data: original.base64,
+            name: original.name,
           },
-          name: !this.state.name ? file.name : null,
+          name: !this.state.name ? original.name : null,
           uploading: false,
           contentHasChanged: true,
         });
@@ -79,19 +82,19 @@ class ImageDetailsForm extends React.Component {
   }
 
   render() {
-    const { name, s3, file, uploading, newImage, contentHasChanged } = this.state;
+    const { name, pic, file, uploading, newImage, contentHasChanged } = this.state;
     return (
       <div>
         <FieldsSection name="Image Details">
           <div className="image-form__wrapper">
             <div className="image-form__thumbnail">
-              <Thumbnail name={name} url={s3.url} onClick={this.onThumbnailClick}/>
+              <Thumbnail name={name} url={pic.url} data={pic.data} onClick={this.onThumbnailClick}/>
             </div>
             {
               (uploading && <Loading />) ||
               <FileField setRef={this.setRef} name='File' value={file && file.name} onChange={this.handleFileUpload} />
             }
-            <InputField name='Name' value={name || s3.name} onChange={this.onChange} />
+            <InputField name='Name' value={name || pic.name} onChange={this.onChange} />
           </div>
         </FieldsSection>
         <ButtonRow
