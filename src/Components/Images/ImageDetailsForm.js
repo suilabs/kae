@@ -15,8 +15,9 @@ class ImageDetailsForm extends React.Component {
       name: props.name,
       pic: {
         url: props.url,
+        thumbnailUrl: props.thumbnailUrl,
         data: null,
-        name: props.filename,
+        filename: props.filename,
       },
       file: null,
       uploading: false,
@@ -29,7 +30,7 @@ class ImageDetailsForm extends React.Component {
     const targetName = target.name.toLowerCase();
     this.setState({
       [targetName]: target.value,
-      contentHasChanged: !!this.state.pic.url,
+      contentHasChanged: !!this.state.pic.url || (this.props.name && this.props.name !== this.state.name),
     });
   };
 
@@ -88,13 +89,13 @@ class ImageDetailsForm extends React.Component {
         <FieldsSection name="Image Details">
           <div className="image-form__wrapper">
             <div className="image-form__thumbnail">
-              <Thumbnail name={name} url={pic.url} data={pic.data} onClick={this.onThumbnailClick}/>
+              <Thumbnail name={name} url={pic.thumbnailUrl || pic.url} data={pic.data} onClick={this.onThumbnailClick}/>
             </div>
             {
               (uploading && <Loading />) ||
               <FileField setRef={this.setRef} name='File' value={file && file.name} onChange={this.handleFileUpload} />
             }
-            <InputField name='Name' value={name || pic.name} onChange={this.onChange} />
+            <InputField name='Name' value={name || pic.filename} onChange={this.onChange} />
           </div>
         </FieldsSection>
         <ButtonRow

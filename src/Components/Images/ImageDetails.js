@@ -16,6 +16,8 @@ class ImageDetails extends React.Component {
     this.state = {
       id: image.id,
       name: image.name,
+      filename: image.filename,
+      thumbnailUrl: image.thumbnailUrl,
       url: image.url,
     };
 
@@ -42,7 +44,7 @@ class ImageDetails extends React.Component {
       name,
       url: pic.url,
       thumbnailUrl: pic.thumbnailUrl,
-      filename: pic.name,
+      filename: pic.filename,
     };
     mutation({
       variables: image

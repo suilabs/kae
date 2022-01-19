@@ -2,8 +2,8 @@ import { gql } from 'apollo-boost';
 import withQuery from "./withQuery";
 
 export const ImageUpdateQuery = gql`
-    mutation UpdateImage($id: String!, $name: String!, $url: String!, $thumbnailUrl: String!) {
-        updateImage(id: $id, name: $name, url: $url, thumbnailUrl: $thumbnailUrl) {
+    mutation UpdateImage($id: String!, $name: String!, $url: String!, $thumbnailUrl: String!, $filename: String!) {
+        updateImage(id: $id, name: $name, url: $url, thumbnailUrl: $thumbnailUrl, filename: $filename) {
             name
         }
     }
@@ -32,6 +32,7 @@ const withImageQuery = gql`
             id
             name
             url
+            thumbnailUrl
             filename
         }
     }

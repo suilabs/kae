@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, withRouter } from 'react-router-dom';
-import ApolloClient from 'apollo-boost';
+import ApolloClient, { InMemoryCache } from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
 import Home from './Home';
@@ -24,17 +24,18 @@ import './AppMedia.css';
 
 const client = new ApolloClient({
   uri: getServiceUrl('graphql'),
+  cache: new InMemoryCache({ resultCatching: false }),
   defaultOptions: {
     watchQuery: {
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'no-cache',
       errorPolicy: 'all',
     },
     query: {
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'no-cache',
       errorPolicy: 'all',
     },
     mutate: {
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'no-cache',
       errorPolicy: 'all'
     }
   }
