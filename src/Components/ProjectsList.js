@@ -37,7 +37,7 @@ const ProjectsList = ({data: { projects }}) => {
     <div>
       <h1>Project List</h1>
       <div className={'.list'}>
-        {[...projects, createProject].map(project =>
+        {[createProject, ...projects].map(project =>
           <ProjectListItem key={project.id} project={project} />
         )}
       </div>
