@@ -12,6 +12,7 @@ export const PROJECTS_QUERY = gql`
                 url
                 thumbnailUrl
             }
+            date
         }
     }
 `;

@@ -27,6 +27,7 @@ export const PROJECT_QUERY = gql`
               propsJson
             }
             languages
+            date
         }
     }
 `;

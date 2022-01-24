@@ -30,7 +30,8 @@ class ProjectDetails extends React.Component {
       cover: project.cover && project.cover.id,
       type: project.type && project.type.id,
       section: project.section && project.section.id,
-      configuration: project.configuration
+      configuration: project.configuration,
+      date: project.date || (new Date()).toISOString().split('T')[0]
     };
 
     mutation({

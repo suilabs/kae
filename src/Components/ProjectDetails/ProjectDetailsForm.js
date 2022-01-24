@@ -67,6 +67,7 @@ class ProjectDetailsForm extends React.Component {
       type: project.type || props.data.projectTypes[0] || null,
       section: project.section || props.data.sections[0] || null,
       languages: ['ca', 'es', 'en'],
+      date: project.date || (new Date()).toISOString().split('T')[0],
       contentHasChanged: false,
       newProject: !Object.keys(project).length,
       whatsChanged: [],
@@ -153,7 +154,8 @@ class ProjectDetailsForm extends React.Component {
       section,
       contentHasChanged,
       newProject,
-      languages
+      languages,
+      date
     } = this.state;
     const {
       projectTypes,
@@ -179,6 +181,7 @@ class ProjectDetailsForm extends React.Component {
           <FieldsSection name="Basic description">
             <InputField name="Name" value={name} onChange={this.onChange} />
             <InputField name="Url" value={url} onChange={this.onChange}/>
+            <InputField name="Date" value={date} onChange={this.onChange}/>
           </FieldsSection>
           <FieldsSection name="Cover">
             <ImageSelectorBox id="cover" src={coverUrl} onChange={this.onChange} />
