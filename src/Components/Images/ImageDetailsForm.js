@@ -51,12 +51,12 @@ class ImageDetailsForm extends React.Component {
       uploading: true,
     });
     return FileService.upload(target.files[0])
-      .then(([ original, thumbnail ]) => {
+      .then(([ original, thumbnail, preview ]) => {
         this.setState({
           pic: {
             url: original.url,
             thumbnailUrl: thumbnail.url,
-            data: original.base64,
+            data: preview.base64,
             name: original.name,
           },
           name: !this.state.name ? original.name : null,
