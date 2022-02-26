@@ -95,7 +95,7 @@ SelectInput.defaultProps = {
 
 export const FileField = ({name, file, onChange, setRef}) => (
   <div className="field" hidden>
-    <input ref={setRef} type="file" accept="image/*" name={name.replace(' ', '_')} value={file} onChange={onChange} capture="capture"/>
+    <input ref={setRef} type="file" accept="image/*" name={name.replace(' ', '_')} value={file} onChange={onChange} />
   </div>
 );
 

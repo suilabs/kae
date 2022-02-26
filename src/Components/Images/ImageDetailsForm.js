@@ -51,7 +51,8 @@ class ImageDetailsForm extends React.Component {
       uploading: true,
     });
     return FileService.upload(target.files[0])
-      .then(([ original, thumbnail, preview ]) => {
+      .then((response) => {
+        const [ original, thumbnail, preview ] = response.images;
         this.setState({
           pic: {
             url: original.url,
